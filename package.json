@@ -1,7 +1,9 @@
 {
   "name": "scroll-lock-controller",
   "version": "0.0.1",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/scroll-lock-controller.umd.js",
   "module": "./dist/scroll-lock-controller.es.js",
   "exports": {
@@ -24,6 +26,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "bs-webapi": "^0.19.1",
     "rescript": "^9.1.2",
     "vite": "^2.3.3"
   }
