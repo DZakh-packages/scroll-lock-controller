@@ -1,10 +1,22 @@
 {
-  "name": "rescript-project-template",
+  "name": "scroll-lock-controller",
   "version": "0.0.1",
+  "files": ["dist"],
+  "main": "./dist/scroll-lock-controller.umd.js",
+  "module": "./dist/scroll-lock-controller.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/scroll-lock-controller.es.js",
+      "require": "./dist/scroll-lock-controller.umd.js"
+    }
+  },
   "scripts": {
-    "build": "rescript",
-    "clean": "rescript clean -with-deps",
-    "start": "rescript build -w"
+    "dev": "vite serve",
+    "build": "vite build",
+    "serve": "vite preview",
+    "re:build": "rescript",
+    "re:clean": "rescript clean -with-deps",
+    "re:dev": "rescript build -w"
   },
   "keywords": [
     "rescript"
@@ -12,6 +24,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "rescript": "^9.1.2"
+    "rescript": "^9.1.2",
+    "vite": "^2.3.3"
   }
 }

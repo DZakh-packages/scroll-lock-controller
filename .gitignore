@@ -1,5 +1,12 @@
 .DS_Store
 /node_modules/
-/lib/
+
+# rescript
 .bsb.lock
 .merlin
+/lib/
+
+# vite
+/dist/
+/dist-ssr/
+*.local
