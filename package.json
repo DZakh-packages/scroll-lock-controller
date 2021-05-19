@@ -13,9 +13,8 @@
     }
   },
   "scripts": {
-    "dev": "vite serve",
+    "demo": "vite serve",
     "build": "vite build",
-    "serve": "vite preview",
     "re:build": "rescript",
     "re:clean": "rescript clean -with-deps",
     "re:dev": "rescript build -w"
