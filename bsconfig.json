@@ -12,6 +12,8 @@
       "in-source": true
     }
   ],
-  "suffix": ".bs.js",
-  "bs-dependencies": ["bs-webapi"]
+  "suffix": ".mjs",
+  "bs-dependencies": [
+    "bs-webapi"
+  ]
 }

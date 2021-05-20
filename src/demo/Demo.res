@@ -4,7 +4,7 @@ open Webapi.Dom
 
 let enableLockButton = lockButtonEl => {
   let onLockButtonClick = _ => {
-    Index.lock()
+    ScrollLockController.lock()
   }
 
   EventTarget.addEventListener("click", onLockButtonClick, Element.asEventTarget(lockButtonEl))
@@ -12,7 +12,7 @@ let enableLockButton = lockButtonEl => {
 
 let enableUnlockButton = unlockButtonEl => {
   let onUnlockButtonClick = _ => {
-    Index.unlock()
+    ScrollLockController.unlock()
   }
 
   EventTarget.addEventListener("click", onUnlockButtonClick, Element.asEventTarget(unlockButtonEl))
