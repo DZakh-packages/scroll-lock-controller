@@ -10,8 +10,6 @@ services:
         devmode: 1
     working_dir: /opt/app/
     command: /bin/sh -c "while sleep 1000; do :; done"
-    ports:
-      - 3000:3000
     user: node
     volumes:
       - ${PWD}:/opt/app/:delegated
