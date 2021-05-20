@@ -1,0 +1,29 @@
+body {
+  margin: 0;
+}
+
+.screen {
+  height: 90vh;
+  width: 100%;
+}
+
+.background_red {
+  background: red;
+}
+
+.background_blue {
+  background: blue;
+}
+
+.background_green {
+  background: green;
+}
+
+.controls__container {
+  position: fixed;
+
+  right: 40px;
+  bottom: 40px;
+  background: white;
+  padding: 10px;
+}
