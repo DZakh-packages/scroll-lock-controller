@@ -3,16 +3,30 @@
 open Webapi.Dom
 
 let enableLockButton = lockButtonEl => {
+  let scrollableNodeList = document |> Document.querySelectorAll(".js-modal-with-scroll")
+
   let onLockButtonClick = _ => {
-    ScrollLockController.lock()
+    scrollableNodeList |> NodeList.forEach((scrollableNode, _idx) => {
+      switch ScrollLockController__helpers.convertNodeToElement(scrollableNode) {
+      | Some(scrollableEl) => ScrollLockController.lock(scrollableEl)
+      | None => ()
+      }
+    })
   }
 
   EventTarget.addEventListener("click", onLockButtonClick, Element.asEventTarget(lockButtonEl))
 }
 
 let enableUnlockButton = unlockButtonEl => {
+  let scrollableNodeList = document |> Document.querySelectorAll(".js-modal-with-scroll")
+
   let onUnlockButtonClick = _ => {
-    ScrollLockController.unlock()
+    scrollableNodeList |> NodeList.forEach((scrollableNode, _idx) => {
+      switch ScrollLockController__helpers.convertNodeToElement(scrollableNode) {
+      | Some(scrollableEl) => ScrollLockController.unlock(scrollableEl)
+      | None => ()
+      }
+    })
   }
 
   EventTarget.addEventListener("click", onUnlockButtonClick, Element.asEventTarget(unlockButtonEl))

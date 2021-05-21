@@ -1,7 +1,11 @@
-let lock = () => {
-  Js.log("lock")
+let lock = el => {
+  BodyScrollLock.disableBodyScroll(
+    el,
+    ~options=BodyScrollLock.bodyScrollOptions(~reserveScrollBarGap=true, ()),
+    (),
+  )
 }
 
-let unlock = () => {
-  Js.log("unlock")
+let unlock = el => {
+  BodyScrollLock.enableBodyScroll(el)
 }

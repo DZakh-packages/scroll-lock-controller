@@ -1,4 +1,8 @@
-let isServer: bool = %raw(`typeof window === undefined`)
+module Environment = {
+  open Webapi.Dom
+
+  let isServer = Js.Types.test(window, Undefined)
+}
 
 module TrackedValue = {
   type updateValueOptions = {silent: bool}
@@ -40,5 +44,14 @@ module TrackedValue = {
       getValue: getValue,
       setValue: setValue,
     }
+  }
+}
+
+let checkIsElementNode: Dom.node => bool = %raw("(node) => node instanceof Element")
+external convertNodeToElement: Dom.node => Dom.element = "%identity"
+let convertNodeToElement = node => {
+  switch checkIsElementNode(node) {
+  | true => Some(convertNodeToElement(node))
+  | false => None
   }
 }

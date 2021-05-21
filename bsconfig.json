@@ -1,5 +1,6 @@
 {
-  "name": "rescript-project-template",
+  "name": "scroll-lock-controller",
+  "namespace": true,
   "sources": [
     {
       "dir": "src",
@@ -12,7 +13,7 @@
       "in-source": true
     }
   ],
-  "suffix": ".mjs",
+  "suffix": ".bs.js",
   "bs-dependencies": [
     "bs-webapi"
   ]

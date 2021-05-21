@@ -25,8 +25,10 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "body-scroll-lock": "^3.1.5",
     "bs-webapi": "^0.19.1",
     "rescript": "^9.1.2",
     "vite": "^2.3.3"
-  }
+  },
+  "devDependencies": {}
 }
