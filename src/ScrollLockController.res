@@ -1,52 +1,44 @@
-let lock = el => {
+module LocksSet = {
+  type t = ref<array<Dom.element>>
+
+  let make = (): t => {
+    ref([])
+  }
+
+  let isEmpty = value => {
+    value.contents->Js.Array2.length === 0
+  }
+
+  let add = (value, lock) => {
+    value.contents = value.contents->Js.Array2.concat([lock])
+  }
+
+  let remove = (value: t, lock) => {
+    value.contents =
+      value.contents->Js.Array2.filter(existingLock => {
+        existingLock !== lock
+      })
+  }
+}
+
+type t = {locks: LocksSet.t}
+
+let make = () => {
+  {
+    locks: LocksSet.make(),
+  }
+}
+
+let lock = (value, targetElement) => {
+  value.locks->LocksSet.add(targetElement)
   BodyScrollLock.disableBodyScroll(
-    el,
+    targetElement,
     ~options=BodyScrollLock.bodyScrollOptions(~reserveScrollBarGap=true, ()),
     (),
   )
 }
 
-let unlock = el => {
-  BodyScrollLock.enableBodyScroll(el)
-}
-
-type handlers = {
-  lock: Dom.element => unit,
-  unlock: (Dom.element, ~options: BodyScrollLock.bodyScrollOptions=?, unit) => unit,
-  clearLocks: unit => unit,
-  isEmpty: unit => bool,
-}
-
-module DomElementsCmp = Belt.Id.MakeComparable({
-  type t = Dom.element
-  let cmp = (el1, el2) => {
-    switch el1 === el2 {
-    | true => 0
-    | false => 1
-    }
-  }
-})
-
-let create = (): handlers => {
-  let locksSet = ref(Belt.Set.make(~id=module(DomElementsCmp)))
-
-  let lock = targetElement => {
-    locksSet.contents = locksSet.contents->Belt.Set.add(targetElement)
-    BodyScrollLock.enableBodyScroll(targetElement)
-  }
-  let unlock = targetElement => {
-    locksSet.contents = locksSet.contents->Belt.Set.remove(targetElement)
-    BodyScrollLock.disableBodyScroll(targetElement)
-  }
-  let clearLocks = BodyScrollLock.clearAllBodyScrollLocks
-  let isEmpty = () => {
-    locksSet.contents->Belt.Set.isEmpty
-  }
-
-  {
-    lock: lock,
-    unlock: unlock,
-    clearLocks: clearLocks,
-    isEmpty: isEmpty,
-  }
+let unlock = (value, targetElement) => {
+  value.locks->LocksSet.remove(targetElement)
+  BodyScrollLock.enableBodyScroll(targetElement)
 }

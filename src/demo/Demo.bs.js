@@ -7,13 +7,15 @@ import * as ScrollLockController_helpers$ScrollLockController from "../ScrollLoc
 import './style.css';
 ;
 
+var scrollLockController = ScrollLockController$ScrollLockController.make(undefined);
+
 function enableLockButton(lockButtonEl) {
   var scrollableNodeList = document.querySelectorAll(".js-modal-with-scroll");
   var onLockButtonClick = function (param) {
     scrollableNodeList.forEach(function (scrollableNode, _idx) {
           var scrollableEl = ScrollLockController_helpers$ScrollLockController.convertNodeToElement(scrollableNode);
           if (scrollableEl !== undefined) {
-            return ScrollLockController$ScrollLockController.lock(Caml_option.valFromOption(scrollableEl));
+            return ScrollLockController$ScrollLockController.lock(scrollLockController, Caml_option.valFromOption(scrollableEl));
           }
           
         });
@@ -29,7 +31,7 @@ function enableUnlockButton(unlockButtonEl) {
     scrollableNodeList.forEach(function (scrollableNode, _idx) {
           var scrollableEl = ScrollLockController_helpers$ScrollLockController.convertNodeToElement(scrollableNode);
           if (scrollableEl !== undefined) {
-            return ScrollLockController$ScrollLockController.unlock(Caml_option.valFromOption(scrollableEl));
+            return ScrollLockController$ScrollLockController.unlock(scrollLockController, Caml_option.valFromOption(scrollableEl));
           }
           
         });
@@ -56,6 +58,7 @@ if (!(unlockButtonEl == null)) {
 }
 
 export {
+  scrollLockController ,
   enableLockButton ,
   enableUnlockButton ,
   
