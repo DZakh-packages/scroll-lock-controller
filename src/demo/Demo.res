@@ -9,7 +9,7 @@ let enableLockButton = lockButtonEl => {
 
   let onLockButtonClick = _ => {
     scrollableNodeList->NodeList.forEach((scrollableNode, _idx) => {
-      switch ScrollLockController_helpers.convertNodeToElement(scrollableNode) {
+      switch ScrollLockController_Helpers.convertNodeToElement(scrollableNode) {
       | Some(scrollableEl) => scrollLockController->ScrollLockController.lock(scrollableEl)
       | None => ()
       }
@@ -24,7 +24,7 @@ let enableUnlockButton = unlockButtonEl => {
 
   let onUnlockButtonClick = _ => {
     scrollableNodeList->NodeList.forEach((scrollableNode, _idx) => {
-      switch ScrollLockController_helpers.convertNodeToElement(scrollableNode) {
+      switch ScrollLockController_Helpers.convertNodeToElement(scrollableNode) {
       | Some(scrollableEl) => scrollLockController->ScrollLockController.unlock(scrollableEl)
       | None => ()
       }

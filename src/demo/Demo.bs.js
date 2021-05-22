@@ -2,18 +2,18 @@
 
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as ScrollLockController$ScrollLockController from "../ScrollLockController.bs.js";
-import * as ScrollLockController_helpers$ScrollLockController from "../ScrollLockController_helpers.bs.js";
+import * as ScrollLockController_Helpers$ScrollLockController from "../ScrollLockController_Helpers.bs.js";
 
 import './style.css';
 ;
 
-var scrollLockController = ScrollLockController$ScrollLockController.make(undefined);
+var scrollLockController = ScrollLockController$ScrollLockController.make(undefined, undefined, undefined);
 
 function enableLockButton(lockButtonEl) {
   var scrollableNodeList = document.querySelectorAll(".js-modal-with-scroll");
   var onLockButtonClick = function (param) {
     scrollableNodeList.forEach(function (scrollableNode, _idx) {
-          var scrollableEl = ScrollLockController_helpers$ScrollLockController.convertNodeToElement(scrollableNode);
+          var scrollableEl = ScrollLockController_Helpers$ScrollLockController.convertNodeToElement(scrollableNode);
           if (scrollableEl !== undefined) {
             return ScrollLockController$ScrollLockController.lock(scrollLockController, Caml_option.valFromOption(scrollableEl));
           }
@@ -29,7 +29,7 @@ function enableUnlockButton(unlockButtonEl) {
   var scrollableNodeList = document.querySelectorAll(".js-modal-with-scroll");
   var onUnlockButtonClick = function (param) {
     scrollableNodeList.forEach(function (scrollableNode, _idx) {
-          var scrollableEl = ScrollLockController_helpers$ScrollLockController.convertNodeToElement(scrollableNode);
+          var scrollableEl = ScrollLockController_Helpers$ScrollLockController.convertNodeToElement(scrollableNode);
           if (scrollableEl !== undefined) {
             return ScrollLockController$ScrollLockController.unlock(scrollLockController, Caml_option.valFromOption(scrollableEl));
           }
