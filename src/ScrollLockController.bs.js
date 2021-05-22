@@ -25,16 +25,22 @@ function make(onBodyScrollLock, onBodyScrollUnlock, param) {
         };
 }
 
-function lock(value, targetElement) {
-  ScrollLockController_Helpers$ScrollLockController.LocksSet.add(value.locks, targetElement);
+function lock(entity, targetElement) {
+  ScrollLockController_Helpers$ScrollLockController.LocksSet.add(entity.locks, targetElement);
+  ScrollLockController_Helpers$ScrollLockController.TrackedValue.set(entity.isLocked, (function (param) {
+          return true;
+        }));
   BodyScrollLock.disableBodyScroll(targetElement, {
         reserveScrollBarGap: true
       });
   
 }
 
-function unlock(value, targetElement) {
-  ScrollLockController_Helpers$ScrollLockController.LocksSet.remove(value.locks, targetElement);
+function unlock(entity, targetElement) {
+  ScrollLockController_Helpers$ScrollLockController.LocksSet.remove(entity.locks, targetElement);
+  ScrollLockController_Helpers$ScrollLockController.TrackedValue.set(entity.isLocked, (function (param) {
+          return false;
+        }));
   BodyScrollLock.enableBodyScroll(targetElement);
   
 }

@@ -16,13 +16,13 @@ function make(param) {
         };
 }
 
-function add(value, lock) {
-  value.contents = value.contents.concat([lock]);
+function add(entity, lock) {
+  entity.contents = entity.contents.concat([lock]);
   
 }
 
-function remove(value, lock) {
-  value.contents = value.contents.filter(function (existingLock) {
+function remove(entity, lock) {
+  entity.contents = entity.contents.filter(function (existingLock) {
         return existingLock !== lock;
       });
   
@@ -43,23 +43,18 @@ function make$1(onChage, defaultValue) {
         };
 }
 
-function set(value, options, valueGetter) {
-  var prevValue = value.valueRef.contents;
+function set(entity, valueGetter) {
+  var prevValue = entity.valueRef.contents;
   var newValue = valueGetter(prevValue);
-  var isValueChanged = newValue !== prevValue;
-  if (isValueChanged) {
-    value.valueRef.contents = newValue;
-    if (options !== undefined && options.silent === true) {
-      return Curry._1(value.onChange, newValue);
-    } else {
-      return ;
-    }
+  if (newValue !== prevValue) {
+    entity.valueRef.contents = newValue;
+    return Curry._1(entity.onChange, newValue);
   }
   
 }
 
-function get(value) {
-  return value.valueRef.contents;
+function get(entity) {
+  return entity.valueRef.contents;
 }
 
 var TrackedValue = {

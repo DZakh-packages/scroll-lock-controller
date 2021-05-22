@@ -3,20 +3,58 @@
 import * as Jest from "@glennsl/bs-jest/src/jest.bs.js";
 import * as ScrollLockController$ScrollLockController from "../src/ScrollLockController.bs.js";
 
+function mock(prim) {
+  jest.mock(prim);
+  
+}
+
+var expect = Jest.Expect.expect;
+
 jest.mock("body-scroll-lock");
 
 Jest.describe("ScrollLockController", (function (param) {
+        Jest.describe("Test onBodyScrollLock callback", (function (param) {
+                Jest.test("Isn't called right after creation", (function (param) {
+                        var mockOnBodyScrollLock = jest.fn(function (param) {
+                              
+                            });
+                        ScrollLockController$ScrollLockController.make(mockOnBodyScrollLock, undefined, undefined);
+                        var __x = expect(Jest.MockJs.calls(mockOnBodyScrollLock).length);
+                        return Jest.Expect.toBe(0, __x);
+                      }));
+                return Jest.test("Is called after first lock", (function (param) {
+                              var mockOnBodyScrollLock = jest.fn(function (param) {
+                                    
+                                  });
+                              var div = document.createElement("div");
+                              var scrollLockController = ScrollLockController$ScrollLockController.make(mockOnBodyScrollLock, undefined, undefined);
+                              ScrollLockController$ScrollLockController.lock(scrollLockController, div);
+                              var __x = expect(Jest.MockJs.calls(mockOnBodyScrollLock).length);
+                              return Jest.Expect.toBe(1, __x);
+                            }));
+              }));
         return Jest.test("Locks are empty after create", (function (param) {
                       var div = document.createElement("div");
                       var scrollLockController = ScrollLockController$ScrollLockController.make(undefined, undefined, undefined);
                       ScrollLockController$ScrollLockController.lock(scrollLockController, div);
                       console.log(scrollLockController);
-                      var __x = Jest.Expect.expect(true);
+                      var __x = expect(true);
                       return Jest.Expect.toBe(true, __x);
                     }));
       }));
 
+var test = Jest.test;
+
+var describe = Jest.describe;
+
+var JExp;
+
 export {
+  test ,
+  describe ,
+  mock ,
+  expect ,
+  JExp ,
   
 }
 /*  Not a pure module */

@@ -1,4 +1,7 @@
-type t = {locks: ScrollLockController_Helpers.LocksSet.t, isLocked: ScrollLockController_Helpers.TrackedValue.t<bool>}
+type t = {
+  locks: ScrollLockController_Helpers.LocksSet.t,
+  isLocked: ScrollLockController_Helpers.TrackedValue.t<bool>,
+}
 
 let make = (~onBodyScrollLock=?, ~onBodyScrollUnlock=?, ()) => {
   let locks = ScrollLockController_Helpers.LocksSet.make()
@@ -17,8 +20,9 @@ let make = (~onBodyScrollLock=?, ~onBodyScrollUnlock=?, ()) => {
   }
 }
 
-let lock = (value, targetElement) => {
-  value.locks->ScrollLockController_Helpers.LocksSet.add(targetElement)
+let lock = (entity, targetElement) => {
+  entity.locks->ScrollLockController_Helpers.LocksSet.add(targetElement)
+  entity.isLocked->ScrollLockController_Helpers.TrackedValue.set((. _) => true)
   BodyScrollLock.disableBodyScroll(
     targetElement,
     ~options=BodyScrollLock.bodyScrollOptions(~reserveScrollBarGap=true, ()),
@@ -26,7 +30,8 @@ let lock = (value, targetElement) => {
   )
 }
 
-let unlock = (value, targetElement) => {
-  value.locks->ScrollLockController_Helpers.LocksSet.remove(targetElement)
+let unlock = (entity, targetElement) => {
+  entity.locks->ScrollLockController_Helpers.LocksSet.remove(targetElement)
+  entity.isLocked->ScrollLockController_Helpers.TrackedValue.set((. _) => false)
   BodyScrollLock.enableBodyScroll(targetElement)
 }
