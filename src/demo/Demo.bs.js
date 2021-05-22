@@ -39,13 +39,17 @@ function enableUnlockButton(unlockButtonEl) {
   
 }
 
-var lockButtonEl = document.querySelector(".js-lock-button");
+var __x = document;
+
+var lockButtonEl = __x.querySelector(".js-lock-button");
 
 if (!(lockButtonEl == null)) {
   enableLockButton(lockButtonEl);
 }
 
-var unlockButtonEl = document.querySelector(".js-unlock-button");
+var __x$1 = document;
+
+var unlockButtonEl = __x$1.querySelector(".js-unlock-button");
 
 if (!(unlockButtonEl == null)) {
   enableUnlockButton(unlockButtonEl);

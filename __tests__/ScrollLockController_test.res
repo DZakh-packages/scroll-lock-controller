@@ -8,7 +8,7 @@ describe("ScrollLockController", () => {
   test("Locks are empty after create", () => {
     let controls = ScrollLockController.create()
 
-    expect(controls.isEmpty()) |> toBe(true)
+    expect(controls.isEmpty())->toBe(true, _)
   })
 
   test("Locks aren't empty after lock", () => {
@@ -18,7 +18,7 @@ describe("ScrollLockController", () => {
     let controls = ScrollLockController.create()
     controls.lock(div)
 
-    expect(controls.isEmpty()) |> toBe(false)
+    expect(controls.isEmpty())->toBe(false, _)
   })
 
   test("Locks are empty after lock and unlock", () => {
@@ -29,6 +29,6 @@ describe("ScrollLockController", () => {
     controls.lock(div)
     controls.unlock(div, ())
 
-    expect(controls.isEmpty()) |> toBe(true)
+    expect(controls.isEmpty())->toBe(true, _)
   })
 })
