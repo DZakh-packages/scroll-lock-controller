@@ -1,25 +1,48 @@
-module Environment = {
-  open Webapi.Dom
+let isServer = Js.Types.test(Webapi.Dom.window, Undefined)
 
-  let isServer = Js.Types.test(window, Undefined)
-}
+let uniq: array<'a> => array<'a> = %raw("(array) => [...new Set(array)]")
+
+let isEmpty = array => array->Js.Array2.length === 0
 
 module LocksSet = {
-  type t = ref<array<Dom.element>>
+  type lock = Dom.element
+  type locks = array<lock>
+  type t = ref<locks>
+
+  type addResult = {
+    new: locks,
+    existing: locks,
+  }
 
   let make = (): t => {
     ref([])
   }
 
-  // let isEmpty = value => {
-  //   value.contents->Js.Array2.length === 0
-  // }
-
-  let add = (entity, lock) => {
-    entity := entity.contents->Js.Array2.concat([lock])
+  let isEmpty = (entity: t) => {
+    isEmpty(entity.contents)
   }
 
-  let remove = (entity: t, lock) => {
+  let isExistingLock = (entity: t, lock: lock) => {
+    entity.contents->Js.Array2.some(entityLock => {
+      entityLock === lock
+    })
+  }
+
+  let add = (entity: t, locks: locks) => {
+    let uniqLocks = uniq(locks)
+    let result = uniqLocks->Js.Array2.reduce((acc, lock) => {
+      switch entity->isExistingLock(lock) {
+      | true => {new: acc.new, existing: acc.existing->Js.Array2.concat([lock])}
+      | false => {new: acc.new->Js.Array2.concat([lock]), existing: acc.existing}
+      }
+    }, {new: [], existing: []})
+
+    entity := entity.contents->Js.Array2.concat(result.new)
+
+    result
+  }
+
+  let remove = (entity: t, lock: lock) => {
     entity.contents =
       entity.contents->Js.Array2.filter(existingLock => {
         existingLock !== lock
@@ -34,7 +57,7 @@ module TrackedValue = {
     {valueRef: ref(defaultValue), onChange: onChage}
   }
 
-  let set = (entity, valueGetter) => {
+  let set = (entity: t<'curValue>, valueGetter) => {
     let prevValue = entity.valueRef.contents
     let newValue = valueGetter(. prevValue)
 
@@ -47,7 +70,7 @@ module TrackedValue = {
     }
   }
 
-  let get = entity => {
+  let get = (entity: t<'curValue>) => {
     entity.valueRef.contents
   }
 }

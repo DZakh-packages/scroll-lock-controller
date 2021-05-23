@@ -15,7 +15,7 @@ function enableLockButton(lockButtonEl) {
     scrollableNodeList.forEach(function (scrollableNode, _idx) {
           var scrollableEl = ScrollLockController_Helpers$ScrollLockController.convertNodeToElement(scrollableNode);
           if (scrollableEl !== undefined) {
-            return ScrollLockController$ScrollLockController.lock(scrollLockController, Caml_option.valFromOption(scrollableEl));
+            return ScrollLockController$ScrollLockController.lock(scrollLockController, [Caml_option.valFromOption(scrollableEl)]);
           }
           
         });

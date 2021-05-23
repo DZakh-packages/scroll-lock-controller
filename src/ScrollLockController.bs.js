@@ -25,13 +25,19 @@ function make(onBodyScrollLock, onBodyScrollUnlock, param) {
         };
 }
 
-function lock(entity, targetElement) {
-  ScrollLockController_Helpers$ScrollLockController.LocksSet.add(entity.locks, targetElement);
-  ScrollLockController_Helpers$ScrollLockController.TrackedValue.set(entity.isLocked, (function (param) {
-          return true;
-        }));
-  BodyScrollLock.disableBodyScroll(targetElement, {
-        reserveScrollBarGap: true
+function lock(entity, targetElements) {
+  var match = ScrollLockController_Helpers$ScrollLockController.LocksSet.add(entity.locks, targetElements);
+  var $$new = match.new;
+  if (!ScrollLockController_Helpers$ScrollLockController.isEmpty($$new)) {
+    ScrollLockController_Helpers$ScrollLockController.TrackedValue.set(entity.isLocked, (function (param) {
+            return true;
+          }));
+  }
+  $$new.forEach(function (targetElement) {
+        BodyScrollLock.disableBodyScroll(targetElement, {
+              reserveScrollBarGap: true
+            });
+        
       });
   
 }

@@ -6,9 +6,11 @@ import * as Caml_option from "rescript/lib/es6/caml_option.js";
 
 var isServer = Js_types.test(window, /* Undefined */0);
 
-var Environment = {
-  isServer: isServer
-};
+var uniq = ((array) => [...new Set(array)]);
+
+function isEmpty(array) {
+  return array.length === 0;
+}
 
 function make(param) {
   return {
@@ -16,9 +18,36 @@ function make(param) {
         };
 }
 
-function add(entity, lock) {
-  entity.contents = entity.contents.concat([lock]);
-  
+function isEmpty$1(entity) {
+  return entity.contents.length === 0;
+}
+
+function isExistingLock(entity, lock) {
+  return entity.contents.some(function (entityLock) {
+              return entityLock === lock;
+            });
+}
+
+function add(entity, locks) {
+  var uniqLocks = uniq(locks);
+  var result = uniqLocks.reduce((function (acc, lock) {
+          if (isExistingLock(entity, lock)) {
+            return {
+                    new: acc.new,
+                    existing: acc.existing.concat([lock])
+                  };
+          } else {
+            return {
+                    new: acc.new.concat([lock]),
+                    existing: acc.existing
+                  };
+          }
+        }), {
+        new: [],
+        existing: []
+      });
+  entity.contents = entity.contents.concat(result.new);
+  return result;
 }
 
 function remove(entity, lock) {
@@ -30,6 +59,8 @@ function remove(entity, lock) {
 
 var LocksSet = {
   make: make,
+  isEmpty: isEmpty$1,
+  isExistingLock: isExistingLock,
   add: add,
   remove: remove
 };
@@ -73,7 +104,9 @@ function convertNodeToElement(node) {
 }
 
 export {
-  Environment ,
+  isServer ,
+  uniq ,
+  isEmpty ,
   LocksSet ,
   TrackedValue ,
   checkIsElementNode ,
