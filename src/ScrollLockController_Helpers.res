@@ -16,7 +16,7 @@ module LocksSet = {
   // }
 
   let add = (entity, lock) => {
-    entity.contents = entity.contents->Js.Array2.concat([lock])
+    entity := entity.contents->Js.Array2.concat([lock])
   }
 
   let remove = (entity: t, lock) => {
@@ -40,7 +40,7 @@ module TrackedValue = {
 
     switch newValue !== prevValue {
     | true => {
-        entity.valueRef.contents = newValue
+        entity.valueRef := newValue
         entity.onChange(newValue)
       }
     | false => ()
