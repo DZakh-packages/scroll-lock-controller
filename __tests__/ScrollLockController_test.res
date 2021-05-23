@@ -197,5 +197,23 @@ describe("ScrollLockController", () => {
       | (_, _, _) => fail("Prepare stage failed")
       }
     })
+
+    test("Isn't called after unlocking while body scroll isn't locked", () => {
+      switch (
+        mockOnBodyScrollUnlockRef.contents,
+        scrollLockControllerRef.contents,
+        targetElement1Ref.contents,
+      ) {
+      | (Some(mockOnBodyScrollUnlock), Some(scrollLockController), Some(targetElement1)) => {
+          scrollLockController->ScrollLockController.unlock([targetElement1])
+
+          expect(mockOnBodyScrollUnlock->Jest.MockJs.calls->Js.Array2.length)->Jest.Expect.toBe(
+            0,
+            _,
+          )
+        }
+      | (_, _, _) => fail("Prepare stage failed")
+      }
+    })
   })
 })
