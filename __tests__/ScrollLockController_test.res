@@ -50,7 +50,7 @@ describe("ScrollLockController", () => {
       ) {
       | (Some(mockOnBodyScrollLock), Some(scrollLockController), Some(targetElement1)) => {
           scrollLockController->ScrollLockController.lock([targetElement1])
-          scrollLockController->ScrollLockController.unlock(targetElement1)
+          scrollLockController->ScrollLockController.unlock([targetElement1])
 
           expect(mockOnBodyScrollLock->Jest.MockJs.calls->Js.Array2.length)->Jest.Expect.toBe(1, _)
         }
@@ -66,7 +66,7 @@ describe("ScrollLockController", () => {
       ) {
       | (Some(mockOnBodyScrollLock), Some(scrollLockController), Some(targetElement1)) => {
           scrollLockController->ScrollLockController.lock([targetElement1])
-          scrollLockController->ScrollLockController.unlock(targetElement1)
+          scrollLockController->ScrollLockController.unlock([targetElement1])
           scrollLockController->ScrollLockController.lock([targetElement1])
 
           expect(mockOnBodyScrollLock->Jest.MockJs.calls->Js.Array2.length)->Jest.Expect.toBe(2, _)
@@ -144,7 +144,7 @@ describe("ScrollLockController", () => {
       ) {
       | (Some(mockOnBodyScrollUnlock), Some(scrollLockController), Some(targetElement1)) => {
           scrollLockController->ScrollLockController.lock([targetElement1])
-          scrollLockController->ScrollLockController.unlock(targetElement1)
+          scrollLockController->ScrollLockController.unlock([targetElement1])
 
           expect(mockOnBodyScrollUnlock->Jest.MockJs.calls->Js.Array2.length)->Jest.Expect.toBe(
             1,
@@ -163,9 +163,9 @@ describe("ScrollLockController", () => {
       ) {
       | (Some(mockOnBodyScrollUnlock), Some(scrollLockController), Some(targetElement1)) => {
           scrollLockController->ScrollLockController.lock([targetElement1])
-          scrollLockController->ScrollLockController.unlock(targetElement1)
+          scrollLockController->ScrollLockController.unlock([targetElement1])
           scrollLockController->ScrollLockController.lock([targetElement1])
-          scrollLockController->ScrollLockController.unlock(targetElement1)
+          scrollLockController->ScrollLockController.unlock([targetElement1])
 
           expect(mockOnBodyScrollUnlock->Jest.MockJs.calls->Js.Array2.length)->Jest.Expect.toBe(
             2,
@@ -187,7 +187,7 @@ describe("ScrollLockController", () => {
 
           scrollLockController->ScrollLockController.lock([targetElement1])
           scrollLockController->ScrollLockController.lock([targetElement2])
-          scrollLockController->ScrollLockController.unlock(targetElement2)
+          scrollLockController->ScrollLockController.unlock([targetElement2])
 
           expect(mockOnBodyScrollUnlock->Jest.MockJs.calls->Js.Array2.length)->Jest.Expect.toBe(
             0,

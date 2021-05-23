@@ -25,30 +25,32 @@ function make(onBodyScrollLock, onBodyScrollUnlock, param) {
         };
 }
 
+function isBodyScrollLocked(entity) {
+  return !ScrollLockController_Helpers$ScrollLockController.LocksSet.isEmpty(entity.locks);
+}
+
 function lock(entity, targetElements) {
-  var match = ScrollLockController_Helpers$ScrollLockController.LocksSet.add(entity.locks, targetElements);
-  var $$new = match.new;
-  if (!ScrollLockController_Helpers$ScrollLockController.isEmpty($$new)) {
-    ScrollLockController_Helpers$ScrollLockController.TrackedValue.set(entity.isLocked, (function (param) {
-            return true;
-          }));
-  }
-  $$new.forEach(function (targetElement) {
+  var added = ScrollLockController_Helpers$ScrollLockController.LocksSet.add(entity.locks, targetElements);
+  added.forEach(function (targetElement) {
         BodyScrollLock.disableBodyScroll(targetElement, {
               reserveScrollBarGap: true
             });
         
       });
-  
+  return ScrollLockController_Helpers$ScrollLockController.TrackedValue.set(entity.isLocked, (function (param) {
+                return isBodyScrollLocked(entity);
+              }));
 }
 
-function unlock(entity, targetElement) {
-  ScrollLockController_Helpers$ScrollLockController.LocksSet.remove(entity.locks, targetElement);
-  ScrollLockController_Helpers$ScrollLockController.TrackedValue.set(entity.isLocked, (function (param) {
-          return false;
-        }));
-  BodyScrollLock.enableBodyScroll(targetElement);
-  
+function unlock(entity, targetElements) {
+  var removed = ScrollLockController_Helpers$ScrollLockController.LocksSet.remove(entity.locks, targetElements);
+  removed.forEach(function (targetElement) {
+        BodyScrollLock.enableBodyScroll(targetElement);
+        
+      });
+  return ScrollLockController_Helpers$ScrollLockController.TrackedValue.set(entity.isLocked, (function (param) {
+                return isBodyScrollLocked(entity);
+              }));
 }
 
 export {

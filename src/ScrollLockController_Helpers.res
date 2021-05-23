@@ -2,7 +2,7 @@ let isServer = Js.Types.test(Webapi.Dom.window, Undefined)
 
 let uniq: array<'a> => array<'a> = %raw("(array) => [...new Set(array)]")
 
-let isEmpty = array => array->Js.Array2.length === 0
+let isEmptyArray = array => array->Js.Array2.length === 0
 
 module LocksSet = {
   type lock = Dom.element
@@ -19,7 +19,7 @@ module LocksSet = {
   }
 
   let isEmpty = (entity: t) => {
-    isEmpty(entity.contents)
+    isEmptyArray(entity.contents)
   }
 
   let isExistingLock = (entity: t, lock: lock) => {
@@ -30,23 +30,34 @@ module LocksSet = {
 
   let add = (entity: t, locks: locks) => {
     let uniqLocks = uniq(locks)
-    let result = uniqLocks->Js.Array2.reduce((acc, lock) => {
-      switch entity->isExistingLock(lock) {
-      | true => {new: acc.new, existing: acc.existing->Js.Array2.concat([lock])}
-      | false => {new: acc.new->Js.Array2.concat([lock]), existing: acc.existing}
-      }
-    }, {new: [], existing: []})
 
-    entity := entity.contents->Js.Array2.concat(result.new)
+    let added = uniqLocks->Js.Array2.filter(lock => {
+      !(entity->isExistingLock(lock))
+    })
 
-    result
+    entity := entity.contents->Js.Array2.concat(added)
+
+    added
   }
 
-  let remove = (entity: t, lock: lock) => {
-    entity.contents =
+  let remove = (entity: t, locks: locks) => {
+    let removingLocksRef = ref(uniq(locks))
+    let removedRef = ref([])
+
+    entity :=
       entity.contents->Js.Array2.filter(existingLock => {
-        existingLock !== lock
+        let removingLockIdx = removingLocksRef.contents->Js.Array2.indexOf(existingLock)
+        let isRemovingLock = removingLockIdx >= 0
+
+        let removedLocks =
+          removingLocksRef.contents->Js.Array2.removeCountInPlace(~count=1, ~pos=removingLockIdx)
+
+        removedRef := removedRef.contents->Js.Array2.concat(removedLocks)
+
+        !isRemovingLock
       })
+
+    removingLocksRef.contents
   }
 }
 

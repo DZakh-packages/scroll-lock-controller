@@ -8,7 +8,7 @@ var isServer = Js_types.test(window, /* Undefined */0);
 
 var uniq = ((array) => [...new Set(array)]);
 
-function isEmpty(array) {
+function isEmptyArray(array) {
   return array.length === 0;
 }
 
@@ -18,7 +18,7 @@ function make(param) {
         };
 }
 
-function isEmpty$1(entity) {
+function isEmpty(entity) {
   return entity.contents.length === 0;
 }
 
@@ -30,36 +30,33 @@ function isExistingLock(entity, lock) {
 
 function add(entity, locks) {
   var uniqLocks = uniq(locks);
-  var result = uniqLocks.reduce((function (acc, lock) {
-          if (isExistingLock(entity, lock)) {
-            return {
-                    new: acc.new,
-                    existing: acc.existing.concat([lock])
-                  };
-          } else {
-            return {
-                    new: acc.new.concat([lock]),
-                    existing: acc.existing
-                  };
-          }
-        }), {
-        new: [],
-        existing: []
+  var added = uniqLocks.filter(function (lock) {
+        return !isExistingLock(entity, lock);
       });
-  entity.contents = entity.contents.concat(result.new);
-  return result;
+  entity.contents = entity.contents.concat(added);
+  return added;
 }
 
-function remove(entity, lock) {
+function remove(entity, locks) {
+  var removingLocksRef = {
+    contents: uniq(locks)
+  };
+  var removedRef = {
+    contents: []
+  };
   entity.contents = entity.contents.filter(function (existingLock) {
-        return existingLock !== lock;
+        var removingLockIdx = removingLocksRef.contents.indexOf(existingLock);
+        var isRemovingLock = removingLockIdx >= 0;
+        var removedLocks = removingLocksRef.contents.splice(removingLockIdx, 1);
+        removedRef.contents = removedRef.contents.concat(removedLocks);
+        return !isRemovingLock;
       });
-  
+  return removingLocksRef.contents;
 }
 
 var LocksSet = {
   make: make,
-  isEmpty: isEmpty$1,
+  isEmpty: isEmpty,
   isExistingLock: isExistingLock,
   add: add,
   remove: remove
@@ -106,7 +103,7 @@ function convertNodeToElement(node) {
 export {
   isServer ,
   uniq ,
-  isEmpty ,
+  isEmptyArray ,
   LocksSet ,
   TrackedValue ,
   checkIsElementNode ,

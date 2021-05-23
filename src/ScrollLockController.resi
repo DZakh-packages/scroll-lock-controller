@@ -7,4 +7,4 @@ let make: (~onBodyScrollLock: unit => unit=?, ~onBodyScrollUnlock: unit => unit=
 
 let lock: (t, array<Dom.element>) => unit
 
-let unlock: (t, Dom.element) => unit
+let unlock: (t, array<Dom.element>) => unit

@@ -25,7 +25,7 @@ let enableUnlockButton = unlockButtonEl => {
   let onUnlockButtonClick = _ => {
     scrollableNodeList->NodeList.forEach((scrollableNode, _idx) => {
       switch ScrollLockController_Helpers.convertNodeToElement(scrollableNode) {
-      | Some(scrollableEl) => scrollLockController->ScrollLockController.unlock(scrollableEl)
+      | Some(scrollableEl) => scrollLockController->ScrollLockController.unlock([scrollableEl])
       | None => ()
       }
     }, _)
