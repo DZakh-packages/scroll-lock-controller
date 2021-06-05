@@ -2,6 +2,7 @@
 
 import * as Jest from "@glennsl/bs-jest/src/jest.bs.js";
 import * as Curry from "rescript/lib/es6/curry.js";
+import * as Caml_array from "rescript/lib/es6/caml_array.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as ScrollLockController$ScrollLockController from "../src/ScrollLockController.bs.js";
 
@@ -21,8 +22,8 @@ var expect = Jest.Expect.expect;
 
 jest.mock("body-scroll-lock");
 
-Jest.describe("ScrollLockController", (function (param) {
-        Jest.describe("Test onBodyScrollLock callback", (function (param) {
+Jest.describe("Test ScrollLockController", (function (param) {
+        Jest.describe("When the onBodyScrollLock callback is passed", (function (param) {
                 var mockOnBodyScrollLockRef = {
                   contents: undefined
                 };
@@ -37,7 +38,7 @@ Jest.describe("ScrollLockController", (function (param) {
                             
                           });
                       mockOnBodyScrollLockRef.contents = Caml_option.some(mockOnBodyScrollLock);
-                      scrollLockControllerRef.contents = ScrollLockController$ScrollLockController.make(mockOnBodyScrollLock, undefined, undefined);
+                      scrollLockControllerRef.contents = ScrollLockController$ScrollLockController.make(mockOnBodyScrollLock, undefined, undefined, undefined, undefined);
                       targetElement1Ref.contents = Caml_option.some(document.createElement("div"));
                       
                     });
@@ -129,38 +130,115 @@ Jest.describe("ScrollLockController", (function (param) {
                               return Jest.Expect.toBe(1, __x);
                             }));
               }));
-        return Jest.describe("Test onBodyScrollUnlock callback", (function (param) {
-                      var mockOnBodyScrollUnlockRef = {
-                        contents: undefined
-                      };
-                      var scrollLockControllerRef = {
-                        contents: undefined
-                      };
-                      var targetElement1Ref = {
-                        contents: undefined
-                      };
-                      beforeEach(function () {
-                            var mockOnBodyScrollUnlock = jest.fn(function (param) {
-                                  
-                                });
-                            mockOnBodyScrollUnlockRef.contents = Caml_option.some(mockOnBodyScrollUnlock);
-                            scrollLockControllerRef.contents = ScrollLockController$ScrollLockController.make(undefined, mockOnBodyScrollUnlock, undefined);
-                            targetElement1Ref.contents = Caml_option.some(document.createElement("div"));
+        Jest.describe("When the onBodyScrollUnlock callback is passed", (function (param) {
+                var mockOnBodyScrollUnlockRef = {
+                  contents: undefined
+                };
+                var scrollLockControllerRef = {
+                  contents: undefined
+                };
+                var targetElement1Ref = {
+                  contents: undefined
+                };
+                beforeEach(function () {
+                      var mockOnBodyScrollUnlock = jest.fn(function (param) {
                             
                           });
-                      Jest.test("Isn't called right after creation", (function (param) {
-                              var match = mockOnBodyScrollUnlockRef.contents;
-                              var match$1 = scrollLockControllerRef.contents;
-                              if (match === undefined) {
-                                return Jest.fail("Prepare stage failed");
-                              }
-                              if (match$1 === undefined) {
-                                return Jest.fail("Prepare stage failed");
-                              }
-                              var __x = expect(Jest.MockJs.calls(Caml_option.valFromOption(match)).length);
-                              return Jest.Expect.toBe(0, __x);
-                            }));
-                      Jest.test("Isn't called after lock", (function (param) {
+                      mockOnBodyScrollUnlockRef.contents = Caml_option.some(mockOnBodyScrollUnlock);
+                      scrollLockControllerRef.contents = ScrollLockController$ScrollLockController.make(undefined, mockOnBodyScrollUnlock, undefined, undefined, undefined);
+                      targetElement1Ref.contents = Caml_option.some(document.createElement("div"));
+                      
+                    });
+                Jest.test("Isn't called right after creation", (function (param) {
+                        var match = mockOnBodyScrollUnlockRef.contents;
+                        var match$1 = scrollLockControllerRef.contents;
+                        if (match === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        if (match$1 === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        var __x = expect(Jest.MockJs.calls(Caml_option.valFromOption(match)).length);
+                        return Jest.Expect.toBe(0, __x);
+                      }));
+                Jest.test("Isn't called after lock", (function (param) {
+                        var match = mockOnBodyScrollUnlockRef.contents;
+                        var match$1 = scrollLockControllerRef.contents;
+                        var match$2 = targetElement1Ref.contents;
+                        if (match === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        if (match$1 === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        if (match$2 === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        ScrollLockController$ScrollLockController.lock(match$1, [Caml_option.valFromOption(match$2)]);
+                        var __x = expect(Jest.MockJs.calls(Caml_option.valFromOption(match)).length);
+                        return Jest.Expect.toBe(0, __x);
+                      }));
+                Jest.test("Is called after unlock", (function (param) {
+                        var match = mockOnBodyScrollUnlockRef.contents;
+                        var match$1 = scrollLockControllerRef.contents;
+                        var match$2 = targetElement1Ref.contents;
+                        if (match === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        if (match$1 === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        if (match$2 === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        var targetElement1 = Caml_option.valFromOption(match$2);
+                        ScrollLockController$ScrollLockController.lock(match$1, [targetElement1]);
+                        ScrollLockController$ScrollLockController.unlock(match$1, [targetElement1]);
+                        var __x = expect(Jest.MockJs.calls(Caml_option.valFromOption(match)).length);
+                        return Jest.Expect.toBe(1, __x);
+                      }));
+                Jest.test("Is called once again after second unlock", (function (param) {
+                        var match = mockOnBodyScrollUnlockRef.contents;
+                        var match$1 = scrollLockControllerRef.contents;
+                        var match$2 = targetElement1Ref.contents;
+                        if (match === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        if (match$1 === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        if (match$2 === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        var targetElement1 = Caml_option.valFromOption(match$2);
+                        ScrollLockController$ScrollLockController.lock(match$1, [targetElement1]);
+                        ScrollLockController$ScrollLockController.unlock(match$1, [targetElement1]);
+                        ScrollLockController$ScrollLockController.lock(match$1, [targetElement1]);
+                        ScrollLockController$ScrollLockController.unlock(match$1, [targetElement1]);
+                        var __x = expect(Jest.MockJs.calls(Caml_option.valFromOption(match)).length);
+                        return Jest.Expect.toBe(2, __x);
+                      }));
+                Jest.test("Isn't called after locking multiple elements and unlocking some of them", (function (param) {
+                        var match = mockOnBodyScrollUnlockRef.contents;
+                        var match$1 = scrollLockControllerRef.contents;
+                        var match$2 = targetElement1Ref.contents;
+                        if (match === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        if (match$1 === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        if (match$2 === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        var targetElement2 = document.createElement("div");
+                        ScrollLockController$ScrollLockController.lock(match$1, [Caml_option.valFromOption(match$2)]);
+                        ScrollLockController$ScrollLockController.lock(match$1, [targetElement2]);
+                        ScrollLockController$ScrollLockController.unlock(match$1, [targetElement2]);
+                        var __x = expect(Jest.MockJs.calls(Caml_option.valFromOption(match)).length);
+                        return Jest.Expect.toBe(0, __x);
+                      }));
+                return Jest.test("Isn't called after unlocking while body scroll isn't locked", (function (param) {
                               var match = mockOnBodyScrollUnlockRef.contents;
                               var match$1 = scrollLockControllerRef.contents;
                               var match$2 = targetElement1Ref.contents;
@@ -173,12 +251,179 @@ Jest.describe("ScrollLockController", (function (param) {
                               if (match$2 === undefined) {
                                 return Jest.fail("Prepare stage failed");
                               }
-                              ScrollLockController$ScrollLockController.lock(match$1, [Caml_option.valFromOption(match$2)]);
+                              ScrollLockController$ScrollLockController.unlock(match$1, [Caml_option.valFromOption(match$2)]);
                               var __x = expect(Jest.MockJs.calls(Caml_option.valFromOption(match)).length);
                               return Jest.Expect.toBe(0, __x);
                             }));
-                      Jest.test("Is called after unlock", (function (param) {
-                              var match = mockOnBodyScrollUnlockRef.contents;
+              }));
+        Jest.describe("When the onLockTargetsAdd callback is passed", (function (param) {
+                var mockOnLockTargetsAddRef = {
+                  contents: undefined
+                };
+                var scrollLockControllerRef = {
+                  contents: undefined
+                };
+                var targetElement1Ref = {
+                  contents: undefined
+                };
+                beforeEach(function () {
+                      var mockOnLockTargetsAdd = jest.fn(function (param) {
+                            
+                          });
+                      mockOnLockTargetsAddRef.contents = Caml_option.some(mockOnLockTargetsAdd);
+                      scrollLockControllerRef.contents = ScrollLockController$ScrollLockController.make(undefined, undefined, mockOnLockTargetsAdd, undefined, undefined);
+                      targetElement1Ref.contents = Caml_option.some(document.createElement("div"));
+                      
+                    });
+                Jest.test("Isn't called right after creation", (function (param) {
+                        var match = mockOnLockTargetsAddRef.contents;
+                        var match$1 = scrollLockControllerRef.contents;
+                        if (match === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        if (match$1 === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        var __x = expect(Jest.MockJs.calls(Caml_option.valFromOption(match)).length);
+                        return Jest.Expect.toBe(0, __x);
+                      }));
+                Jest.test("Is called once after lock call", (function (param) {
+                        var match = mockOnLockTargetsAddRef.contents;
+                        var match$1 = scrollLockControllerRef.contents;
+                        var match$2 = targetElement1Ref.contents;
+                        if (match === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        if (match$1 === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        if (match$2 === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        ScrollLockController$ScrollLockController.lock(match$1, [Caml_option.valFromOption(match$2)]);
+                        var __x = expect(Jest.MockJs.calls(Caml_option.valFromOption(match)).length);
+                        return Jest.Expect.toBe(1, __x);
+                      }));
+                Jest.test("Is called once after lock call with multiple targetElements", (function (param) {
+                        var match = mockOnLockTargetsAddRef.contents;
+                        var match$1 = scrollLockControllerRef.contents;
+                        var match$2 = targetElement1Ref.contents;
+                        if (match === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        if (match$1 === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        if (match$2 === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        var targetElement2 = document.createElement("div");
+                        ScrollLockController$ScrollLockController.lock(match$1, [
+                              Caml_option.valFromOption(match$2),
+                              targetElement2
+                            ]);
+                        var __x = expect(Jest.MockJs.calls(Caml_option.valFromOption(match)).length);
+                        return Jest.Expect.toBe(1, __x);
+                      }));
+                Jest.test("Is called with provided targetElements", (function (param) {
+                        var match = mockOnLockTargetsAddRef.contents;
+                        var match$1 = scrollLockControllerRef.contents;
+                        var match$2 = targetElement1Ref.contents;
+                        if (match === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        if (match$1 === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        if (match$2 === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        var targetElement1 = Caml_option.valFromOption(match$2);
+                        var targetElement2 = document.createElement("div");
+                        ScrollLockController$ScrollLockController.lock(match$1, [
+                              targetElement1,
+                              targetElement2
+                            ]);
+                        var __x = expect(Caml_array.get(Jest.MockJs.calls(Caml_option.valFromOption(match)), 0));
+                        return Jest.Expect.toEqual([
+                                    targetElement1,
+                                    targetElement2
+                                  ], __x);
+                      }));
+                Jest.test("Is called with the only instance of targetElement if there are multiple same instances in the lock function", (function (param) {
+                        var match = mockOnLockTargetsAddRef.contents;
+                        var match$1 = scrollLockControllerRef.contents;
+                        var match$2 = targetElement1Ref.contents;
+                        if (match === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        if (match$1 === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        if (match$2 === undefined) {
+                          return Jest.fail("Prepare stage failed");
+                        }
+                        var targetElement1 = Caml_option.valFromOption(match$2);
+                        ScrollLockController$ScrollLockController.lock(match$1, [
+                              targetElement1,
+                              targetElement1
+                            ]);
+                        var __x = expect(Caml_array.get(Jest.MockJs.calls(Caml_option.valFromOption(match)), 0));
+                        return Jest.Expect.toEqual([targetElement1], __x);
+                      }));
+                return Jest.test("Isn't called the second time if the targetElement is already locked", (function (param) {
+                              var match = mockOnLockTargetsAddRef.contents;
+                              var match$1 = scrollLockControllerRef.contents;
+                              var match$2 = targetElement1Ref.contents;
+                              if (match === undefined) {
+                                return Jest.fail("Prepare stage failed");
+                              }
+                              if (match$1 === undefined) {
+                                return Jest.fail("Prepare stage failed");
+                              }
+                              if (match$2 === undefined) {
+                                return Jest.fail("Prepare stage failed");
+                              }
+                              var targetElement1 = Caml_option.valFromOption(match$2);
+                              ScrollLockController$ScrollLockController.lock(match$1, [targetElement1]);
+                              ScrollLockController$ScrollLockController.lock(match$1, [targetElement1]);
+                              var __x = expect(Jest.MockJs.calls(Caml_option.valFromOption(match)).length);
+                              return Jest.Expect.toBe(1, __x);
+                            }));
+              }));
+        return Jest.describe("When the onLockTargetsRemove callback is passed", (function (param) {
+                      var mockOnLockTargetsRemoveRef = {
+                        contents: undefined
+                      };
+                      var scrollLockControllerRef = {
+                        contents: undefined
+                      };
+                      var targetElement1Ref = {
+                        contents: undefined
+                      };
+                      beforeEach(function () {
+                            var mockOnLockTargetsRemove = jest.fn(function (param) {
+                                  
+                                });
+                            mockOnLockTargetsRemoveRef.contents = Caml_option.some(mockOnLockTargetsRemove);
+                            scrollLockControllerRef.contents = ScrollLockController$ScrollLockController.make(undefined, undefined, undefined, mockOnLockTargetsRemove, undefined);
+                            targetElement1Ref.contents = Caml_option.some(document.createElement("div"));
+                            
+                          });
+                      Jest.test("Isn't called right after creation", (function (param) {
+                              var match = mockOnLockTargetsRemoveRef.contents;
+                              var match$1 = scrollLockControllerRef.contents;
+                              if (match === undefined) {
+                                return Jest.fail("Prepare stage failed");
+                              }
+                              if (match$1 === undefined) {
+                                return Jest.fail("Prepare stage failed");
+                              }
+                              var __x = expect(Jest.MockJs.calls(Caml_option.valFromOption(match)).length);
+                              return Jest.Expect.toBe(0, __x);
+                            }));
+                      Jest.test("Is called once after unlock call", (function (param) {
+                              var match = mockOnLockTargetsRemoveRef.contents;
                               var match$1 = scrollLockControllerRef.contents;
                               var match$2 = targetElement1Ref.contents;
                               if (match === undefined) {
@@ -196,8 +441,63 @@ Jest.describe("ScrollLockController", (function (param) {
                               var __x = expect(Jest.MockJs.calls(Caml_option.valFromOption(match)).length);
                               return Jest.Expect.toBe(1, __x);
                             }));
-                      Jest.test("Is called once again after second unlock", (function (param) {
-                              var match = mockOnBodyScrollUnlockRef.contents;
+                      Jest.test("Is called once after unlock call with multiple targetElements", (function (param) {
+                              var match = mockOnLockTargetsRemoveRef.contents;
+                              var match$1 = scrollLockControllerRef.contents;
+                              var match$2 = targetElement1Ref.contents;
+                              if (match === undefined) {
+                                return Jest.fail("Prepare stage failed");
+                              }
+                              if (match$1 === undefined) {
+                                return Jest.fail("Prepare stage failed");
+                              }
+                              if (match$2 === undefined) {
+                                return Jest.fail("Prepare stage failed");
+                              }
+                              var targetElement1 = Caml_option.valFromOption(match$2);
+                              var targetElement2 = document.createElement("div");
+                              ScrollLockController$ScrollLockController.lock(match$1, [
+                                    targetElement1,
+                                    targetElement2
+                                  ]);
+                              ScrollLockController$ScrollLockController.unlock(match$1, [
+                                    targetElement1,
+                                    targetElement2
+                                  ]);
+                              var __x = expect(Jest.MockJs.calls(Caml_option.valFromOption(match)).length);
+                              return Jest.Expect.toBe(1, __x);
+                            }));
+                      Jest.test("Is called with provided targetElements", (function (param) {
+                              var match = mockOnLockTargetsRemoveRef.contents;
+                              var match$1 = scrollLockControllerRef.contents;
+                              var match$2 = targetElement1Ref.contents;
+                              if (match === undefined) {
+                                return Jest.fail("Prepare stage failed");
+                              }
+                              if (match$1 === undefined) {
+                                return Jest.fail("Prepare stage failed");
+                              }
+                              if (match$2 === undefined) {
+                                return Jest.fail("Prepare stage failed");
+                              }
+                              var targetElement1 = Caml_option.valFromOption(match$2);
+                              var targetElement2 = document.createElement("div");
+                              ScrollLockController$ScrollLockController.lock(match$1, [
+                                    targetElement1,
+                                    targetElement2
+                                  ]);
+                              ScrollLockController$ScrollLockController.unlock(match$1, [
+                                    targetElement1,
+                                    targetElement2
+                                  ]);
+                              var __x = expect(Caml_array.get(Jest.MockJs.calls(Caml_option.valFromOption(match)), 0));
+                              return Jest.Expect.toEqual([
+                                          targetElement1,
+                                          targetElement2
+                                        ], __x);
+                            }));
+                      Jest.test("Is called with the only instance of targetElement if there are multiple same instances in the unlock function", (function (param) {
+                              var match = mockOnLockTargetsRemoveRef.contents;
                               var match$1 = scrollLockControllerRef.contents;
                               var match$2 = targetElement1Ref.contents;
                               if (match === undefined) {
@@ -211,34 +511,15 @@ Jest.describe("ScrollLockController", (function (param) {
                               }
                               var targetElement1 = Caml_option.valFromOption(match$2);
                               ScrollLockController$ScrollLockController.lock(match$1, [targetElement1]);
-                              ScrollLockController$ScrollLockController.unlock(match$1, [targetElement1]);
-                              ScrollLockController$ScrollLockController.lock(match$1, [targetElement1]);
-                              ScrollLockController$ScrollLockController.unlock(match$1, [targetElement1]);
-                              var __x = expect(Jest.MockJs.calls(Caml_option.valFromOption(match)).length);
-                              return Jest.Expect.toBe(2, __x);
+                              ScrollLockController$ScrollLockController.unlock(match$1, [
+                                    targetElement1,
+                                    targetElement1
+                                  ]);
+                              var __x = expect(Caml_array.get(Jest.MockJs.calls(Caml_option.valFromOption(match)), 0));
+                              return Jest.Expect.toEqual([targetElement1], __x);
                             }));
-                      Jest.test("Isn't called after locking multiple elements and unlocking some of them", (function (param) {
-                              var match = mockOnBodyScrollUnlockRef.contents;
-                              var match$1 = scrollLockControllerRef.contents;
-                              var match$2 = targetElement1Ref.contents;
-                              if (match === undefined) {
-                                return Jest.fail("Prepare stage failed");
-                              }
-                              if (match$1 === undefined) {
-                                return Jest.fail("Prepare stage failed");
-                              }
-                              if (match$2 === undefined) {
-                                return Jest.fail("Prepare stage failed");
-                              }
-                              var targetElement2 = document.createElement("div");
-                              ScrollLockController$ScrollLockController.lock(match$1, [Caml_option.valFromOption(match$2)]);
-                              ScrollLockController$ScrollLockController.lock(match$1, [targetElement2]);
-                              ScrollLockController$ScrollLockController.unlock(match$1, [targetElement2]);
-                              var __x = expect(Jest.MockJs.calls(Caml_option.valFromOption(match)).length);
-                              return Jest.Expect.toBe(0, __x);
-                            }));
-                      return Jest.test("Isn't called after unlocking while body scroll isn't locked", (function (param) {
-                                    var match = mockOnBodyScrollUnlockRef.contents;
+                      return Jest.test("Isn't called the second time if the targetElement is already unlocked", (function (param) {
+                                    var match = mockOnLockTargetsRemoveRef.contents;
                                     var match$1 = scrollLockControllerRef.contents;
                                     var match$2 = targetElement1Ref.contents;
                                     if (match === undefined) {
@@ -250,9 +531,12 @@ Jest.describe("ScrollLockController", (function (param) {
                                     if (match$2 === undefined) {
                                       return Jest.fail("Prepare stage failed");
                                     }
-                                    ScrollLockController$ScrollLockController.unlock(match$1, [Caml_option.valFromOption(match$2)]);
+                                    var targetElement1 = Caml_option.valFromOption(match$2);
+                                    ScrollLockController$ScrollLockController.lock(match$1, [targetElement1]);
+                                    ScrollLockController$ScrollLockController.unlock(match$1, [targetElement1]);
+                                    ScrollLockController$ScrollLockController.unlock(match$1, [targetElement1]);
                                     var __x = expect(Jest.MockJs.calls(Caml_option.valFromOption(match)).length);
-                                    return Jest.Expect.toBe(0, __x);
+                                    return Jest.Expect.toBe(1, __x);
                                   }));
                     }));
       }));

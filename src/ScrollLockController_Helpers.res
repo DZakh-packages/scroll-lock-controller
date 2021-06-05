@@ -57,8 +57,7 @@ module LocksSet = {
         !isRemovingLock
       })
 
-    // FIXME: There is a bug. Replace to removedRef. But only after a test for this
-    removingLocksRef.contents
+    removedRef.contents
   }
 }
 

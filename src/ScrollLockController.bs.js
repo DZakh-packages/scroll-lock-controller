@@ -4,7 +4,7 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as BodyScrollLock from "body-scroll-lock";
 import * as ScrollLockController_Helpers$ScrollLockController from "./ScrollLockController_Helpers.bs.js";
 
-function make(onBodyScrollLock, onBodyScrollUnlock, param) {
+function make(onBodyScrollLock, onBodyScrollUnlock, onLockTargetsAdd, onLockTargetsRemove, param) {
   var locks = ScrollLockController_Helpers$ScrollLockController.LocksSet.make(undefined);
   var isLocked = ScrollLockController_Helpers$ScrollLockController.TrackedValue.make((function (newIsLocked) {
           if (newIsLocked) {
@@ -21,7 +21,9 @@ function make(onBodyScrollLock, onBodyScrollUnlock, param) {
         }), false);
   return {
           locks: locks,
-          isLocked: isLocked
+          isLocked: isLocked,
+          onLockTargetsAdd: onLockTargetsAdd,
+          onLockTargetsRemove: onLockTargetsRemove
         };
 }
 
@@ -31,26 +33,38 @@ function isBodyScrollLocked(it) {
 
 function lock(it, targetElements) {
   var added = ScrollLockController_Helpers$ScrollLockController.LocksSet.add(it.locks, targetElements);
+  var hasAddedTargetElements = added.length > 0;
   added.forEach(function (targetElement) {
         BodyScrollLock.disableBodyScroll(targetElement, {
               reserveScrollBarGap: true
             });
         
       });
-  return ScrollLockController_Helpers$ScrollLockController.TrackedValue.set(it.isLocked, (function (param) {
-                return isBodyScrollLocked(it);
-              }));
+  ScrollLockController_Helpers$ScrollLockController.TrackedValue.set(it.isLocked, (function (param) {
+          return isBodyScrollLocked(it);
+        }));
+  var match = it.onLockTargetsAdd;
+  if (match !== undefined && hasAddedTargetElements) {
+    return Curry._1(match, added);
+  }
+  
 }
 
 function unlock(it, targetElements) {
   var removed = ScrollLockController_Helpers$ScrollLockController.LocksSet.remove(it.locks, targetElements);
+  var hasRemovedTargetElements = removed.length > 0;
   removed.forEach(function (targetElement) {
         BodyScrollLock.enableBodyScroll(targetElement);
         
       });
-  return ScrollLockController_Helpers$ScrollLockController.TrackedValue.set(it.isLocked, (function (param) {
-                return isBodyScrollLocked(it);
-              }));
+  ScrollLockController_Helpers$ScrollLockController.TrackedValue.set(it.isLocked, (function (param) {
+          return isBodyScrollLocked(it);
+        }));
+  var match = it.onLockTargetsRemove;
+  if (match !== undefined && hasRemovedTargetElements) {
+    return Curry._1(match, removed);
+  }
+  
 }
 
 export {

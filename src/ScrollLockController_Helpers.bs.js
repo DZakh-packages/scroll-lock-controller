@@ -51,7 +51,7 @@ function remove(it, locks) {
         removedRef.contents = removedRef.contents.concat(removedLocks);
         return !isRemovingLock;
       });
-  return removingLocksRef.contents;
+  return removedRef.contents;
 }
 
 var LocksSet = {

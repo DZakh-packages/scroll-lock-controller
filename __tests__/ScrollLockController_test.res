@@ -4,8 +4,8 @@ let {expect} = module(Jest.Expect)
 
 mock("body-scroll-lock")
 
-describe("ScrollLockController", () => {
-  describe("Test onBodyScrollLock callback", () => {
+describe("Test ScrollLockController", () => {
+  describe("When the onBodyScrollLock callback is passed", () => {
     let mockOnBodyScrollLockRef = ref(None)
     let scrollLockControllerRef = ref(None)
     let targetElement1Ref = ref(None)
@@ -94,7 +94,7 @@ describe("ScrollLockController", () => {
     })
   })
 
-  describe("Test onBodyScrollUnlock callback", () => {
+  describe("When the onBodyScrollUnlock callback is passed", () => {
     let mockOnBodyScrollUnlockRef = ref(None)
     let scrollLockControllerRef = ref(None)
     let targetElement1Ref = ref(None)
@@ -209,6 +209,249 @@ describe("ScrollLockController", () => {
 
           expect(mockOnBodyScrollUnlock->Jest.MockJs.calls->Js.Array2.length)->Jest.Expect.toBe(
             0,
+            _,
+          )
+        }
+      | (_, _, _) => fail("Prepare stage failed")
+      }
+    })
+  })
+
+  describe("When the onLockTargetsAdd callback is passed", () => {
+    let mockOnLockTargetsAddRef = ref(None)
+    let scrollLockControllerRef = ref(None)
+    let targetElement1Ref = ref(None)
+
+    beforeEach(() => {
+      let mockOnLockTargetsAdd = Jest.JestJs.fn(_ => ())
+
+      mockOnLockTargetsAddRef := Some(mockOnLockTargetsAdd)
+      scrollLockControllerRef :=
+        Some(ScrollLockController.make(~onLockTargetsAdd=mockOnLockTargetsAdd->Jest.MockJs.fn, ()))
+      targetElement1Ref := Some(Webapi.Dom.Document.createElement("div", Webapi.Dom.document))
+    })
+
+    test("Isn't called right after creation", () => {
+      switch (mockOnLockTargetsAddRef.contents, scrollLockControllerRef.contents) {
+      | (Some(mockOnLockTargetsAdd), Some(_)) =>
+        expect(mockOnLockTargetsAdd->Jest.MockJs.calls->Js.Array2.length)->Jest.Expect.toBe(0, _)
+      | (_, _) => fail("Prepare stage failed")
+      }
+    })
+
+    test("Is called once after lock call", () => {
+      switch (
+        mockOnLockTargetsAddRef.contents,
+        scrollLockControllerRef.contents,
+        targetElement1Ref.contents,
+      ) {
+      | (Some(mockOnLockTargetsAdd), Some(scrollLockController), Some(targetElement1)) => {
+          scrollLockController->ScrollLockController.lock([targetElement1])
+
+          expect(mockOnLockTargetsAdd->Jest.MockJs.calls->Js.Array2.length)->Jest.Expect.toBe(1, _)
+        }
+      | (_, _, _) => fail("Prepare stage failed")
+      }
+    })
+
+    test("Is called once after lock call with multiple targetElements", () => {
+      switch (
+        mockOnLockTargetsAddRef.contents,
+        scrollLockControllerRef.contents,
+        targetElement1Ref.contents,
+      ) {
+      | (Some(mockOnLockTargetsAdd), Some(scrollLockController), Some(targetElement1)) => {
+          let targetElement2 = Webapi.Dom.Document.createElement("div", Webapi.Dom.document)
+
+          scrollLockController->ScrollLockController.lock([targetElement1, targetElement2])
+
+          expect(mockOnLockTargetsAdd->Jest.MockJs.calls->Js.Array2.length)->Jest.Expect.toBe(1, _)
+        }
+      | (_, _, _) => fail("Prepare stage failed")
+      }
+    })
+
+    test("Is called with provided targetElements", () => {
+      switch (
+        mockOnLockTargetsAddRef.contents,
+        scrollLockControllerRef.contents,
+        targetElement1Ref.contents,
+      ) {
+      | (Some(mockOnLockTargetsAdd), Some(scrollLockController), Some(targetElement1)) => {
+          let targetElement2 = Webapi.Dom.Document.createElement("div", Webapi.Dom.document)
+
+          scrollLockController->ScrollLockController.lock([targetElement1, targetElement2])
+
+          expect((mockOnLockTargetsAdd->Jest.MockJs.calls)[0])->Jest.Expect.toEqual(
+            [targetElement1, targetElement2],
+            _,
+          )
+        }
+      | (_, _, _) => fail("Prepare stage failed")
+      }
+    })
+
+    test(
+      "Is called with the only instance of targetElement if there are multiple same instances in the lock function",
+      () => {
+        switch (
+          mockOnLockTargetsAddRef.contents,
+          scrollLockControllerRef.contents,
+          targetElement1Ref.contents,
+        ) {
+        | (Some(mockOnLockTargetsAdd), Some(scrollLockController), Some(targetElement1)) => {
+            scrollLockController->ScrollLockController.lock([targetElement1, targetElement1])
+
+            expect((mockOnLockTargetsAdd->Jest.MockJs.calls)[0])->Jest.Expect.toEqual(
+              [targetElement1],
+              _,
+            )
+          }
+        | (_, _, _) => fail("Prepare stage failed")
+        }
+      },
+    )
+
+    test("Isn't called the second time if the targetElement is already locked", () => {
+      switch (
+        mockOnLockTargetsAddRef.contents,
+        scrollLockControllerRef.contents,
+        targetElement1Ref.contents,
+      ) {
+      | (Some(mockOnLockTargetsAdd), Some(scrollLockController), Some(targetElement1)) => {
+          scrollLockController->ScrollLockController.lock([targetElement1])
+          scrollLockController->ScrollLockController.lock([targetElement1])
+
+          expect(mockOnLockTargetsAdd->Jest.MockJs.calls->Js.Array2.length)->Jest.Expect.toBe(1, _)
+        }
+      | (_, _, _) => fail("Prepare stage failed")
+      }
+    })
+  })
+
+  describe("When the onLockTargetsRemove callback is passed", () => {
+    let mockOnLockTargetsRemoveRef = ref(None)
+    let scrollLockControllerRef = ref(None)
+    let targetElement1Ref = ref(None)
+
+    beforeEach(() => {
+      let mockOnLockTargetsRemove = Jest.JestJs.fn(_ => ())
+
+      mockOnLockTargetsRemoveRef := Some(mockOnLockTargetsRemove)
+      scrollLockControllerRef :=
+        Some(
+          ScrollLockController.make(
+            ~onLockTargetsRemove=mockOnLockTargetsRemove->Jest.MockJs.fn,
+            (),
+          ),
+        )
+      targetElement1Ref := Some(Webapi.Dom.Document.createElement("div", Webapi.Dom.document))
+    })
+
+    test("Isn't called right after creation", () => {
+      switch (mockOnLockTargetsRemoveRef.contents, scrollLockControllerRef.contents) {
+      | (Some(mockOnLockTargetsRemove), Some(_)) =>
+        expect(mockOnLockTargetsRemove->Jest.MockJs.calls->Js.Array2.length)->Jest.Expect.toBe(0, _)
+      | (_, _) => fail("Prepare stage failed")
+      }
+    })
+
+    test("Is called once after unlock call", () => {
+      switch (
+        mockOnLockTargetsRemoveRef.contents,
+        scrollLockControllerRef.contents,
+        targetElement1Ref.contents,
+      ) {
+      | (Some(mockOnLockTargetsRemove), Some(scrollLockController), Some(targetElement1)) => {
+          scrollLockController->ScrollLockController.lock([targetElement1])
+          scrollLockController->ScrollLockController.unlock([targetElement1])
+
+          expect(mockOnLockTargetsRemove->Jest.MockJs.calls->Js.Array2.length)->Jest.Expect.toBe(
+            1,
+            _,
+          )
+        }
+      | (_, _, _) => fail("Prepare stage failed")
+      }
+    })
+
+    test("Is called once after unlock call with multiple targetElements", () => {
+      switch (
+        mockOnLockTargetsRemoveRef.contents,
+        scrollLockControllerRef.contents,
+        targetElement1Ref.contents,
+      ) {
+      | (Some(mockOnLockTargetsRemove), Some(scrollLockController), Some(targetElement1)) => {
+          let targetElement2 = Webapi.Dom.Document.createElement("div", Webapi.Dom.document)
+
+          scrollLockController->ScrollLockController.lock([targetElement1, targetElement2])
+          scrollLockController->ScrollLockController.unlock([targetElement1, targetElement2])
+
+          expect(mockOnLockTargetsRemove->Jest.MockJs.calls->Js.Array2.length)->Jest.Expect.toBe(
+            1,
+            _,
+          )
+        }
+      | (_, _, _) => fail("Prepare stage failed")
+      }
+    })
+
+    test("Is called with provided targetElements", () => {
+      switch (
+        mockOnLockTargetsRemoveRef.contents,
+        scrollLockControllerRef.contents,
+        targetElement1Ref.contents,
+      ) {
+      | (Some(mockOnLockTargetsRemove), Some(scrollLockController), Some(targetElement1)) => {
+          let targetElement2 = Webapi.Dom.Document.createElement("div", Webapi.Dom.document)
+
+          scrollLockController->ScrollLockController.lock([targetElement1, targetElement2])
+          scrollLockController->ScrollLockController.unlock([targetElement1, targetElement2])
+
+          expect((mockOnLockTargetsRemove->Jest.MockJs.calls)[0])->Jest.Expect.toEqual(
+            [targetElement1, targetElement2],
+            _,
+          )
+        }
+      | (_, _, _) => fail("Prepare stage failed")
+      }
+    })
+
+    test(
+      "Is called with the only instance of targetElement if there are multiple same instances in the unlock function",
+      () => {
+        switch (
+          mockOnLockTargetsRemoveRef.contents,
+          scrollLockControllerRef.contents,
+          targetElement1Ref.contents,
+        ) {
+        | (Some(mockOnLockTargetsRemove), Some(scrollLockController), Some(targetElement1)) => {
+            scrollLockController->ScrollLockController.lock([targetElement1])
+            scrollLockController->ScrollLockController.unlock([targetElement1, targetElement1])
+
+            expect((mockOnLockTargetsRemove->Jest.MockJs.calls)[0])->Jest.Expect.toEqual(
+              [targetElement1],
+              _,
+            )
+          }
+        | (_, _, _) => fail("Prepare stage failed")
+        }
+      },
+    )
+
+    test("Isn't called the second time if the targetElement is already unlocked", () => {
+      switch (
+        mockOnLockTargetsRemoveRef.contents,
+        scrollLockControllerRef.contents,
+        targetElement1Ref.contents,
+      ) {
+      | (Some(mockOnLockTargetsRemove), Some(scrollLockController), Some(targetElement1)) => {
+          scrollLockController->ScrollLockController.lock([targetElement1])
+          scrollLockController->ScrollLockController.unlock([targetElement1])
+          scrollLockController->ScrollLockController.unlock([targetElement1])
+
+          expect(mockOnLockTargetsRemove->Jest.MockJs.calls->Js.Array2.length)->Jest.Expect.toBe(
+            1,
             _,
           )
         }

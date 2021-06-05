@@ -1,9 +1,20 @@
+type onLockTargetsAdd = ScrollLockController_Helpers.LocksSet.locks => unit
+type onLockTargetsRemove = ScrollLockController_Helpers.LocksSet.locks => unit
+
 type t = {
   locks: ScrollLockController_Helpers.LocksSet.t,
   isLocked: ScrollLockController_Helpers.TrackedValue.t<bool>,
+  onLockTargetsAdd: option<onLockTargetsAdd>,
+  onLockTargetsRemove: option<onLockTargetsRemove>,
 }
 
-let make = (~onBodyScrollLock=?, ~onBodyScrollUnlock=?, ()) => {
+let make = (
+  ~onBodyScrollLock=?,
+  ~onBodyScrollUnlock=?,
+  ~onLockTargetsAdd=?,
+  ~onLockTargetsRemove=?,
+  (),
+): t => {
   let locks = ScrollLockController_Helpers.LocksSet.make()
 
   let isLocked = ScrollLockController_Helpers.TrackedValue.make(~onChage=newIsLocked => {
@@ -17,6 +28,8 @@ let make = (~onBodyScrollLock=?, ~onBodyScrollUnlock=?, ()) => {
   {
     locks: locks,
     isLocked: isLocked,
+    onLockTargetsAdd: onLockTargetsAdd,
+    onLockTargetsRemove: onLockTargetsRemove,
   }
 }
 
@@ -26,24 +39,35 @@ let isBodyScrollLocked = (it: t) => {
 
 let lock = (it: t, targetElements) => {
   let added = it.locks->ScrollLockController_Helpers.LocksSet.add(targetElements)
+  let hasAddedTargetElements = added->Js.Array2.length > 0
 
   added->Js.Array2.forEach(targetElement => {
-    BodyScrollLock.disableBodyScroll(
-      targetElement,
+    targetElement->BodyScrollLock.disableBodyScroll(
       ~options=BodyScrollLock.bodyScrollOptions(~reserveScrollBarGap=true, ()),
       (),
     )
   })
 
   it.isLocked->ScrollLockController_Helpers.TrackedValue.set((. _) => it->isBodyScrollLocked)
+
+  switch (it.onLockTargetsAdd, hasAddedTargetElements) {
+  | (Some(onLockTargetsAdd), true) => onLockTargetsAdd(added)
+  | (_, _) => ()
+  }
 }
 
 let unlock = (it: t, targetElements) => {
   let removed = it.locks->ScrollLockController_Helpers.LocksSet.remove(targetElements)
+  let hasRemovedTargetElements = removed->Js.Array2.length > 0
 
   removed->Js.Array2.forEach(targetElement => {
-    BodyScrollLock.enableBodyScroll(targetElement)
+    targetElement->BodyScrollLock.enableBodyScroll
   })
 
   it.isLocked->ScrollLockController_Helpers.TrackedValue.set((. _) => it->isBodyScrollLocked)
+
+  switch (it.onLockTargetsRemove, hasRemovedTargetElements) {
+  | (Some(onLockTargetsRemove), true) => onLockTargetsRemove(removed)
+  | (_, _) => ()
+  }
 }

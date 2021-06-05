@@ -7,7 +7,7 @@ import * as ScrollLockController_Helpers$ScrollLockController from "../ScrollLoc
 import './style.css';
 ;
 
-var scrollLockController = ScrollLockController$ScrollLockController.make(undefined, undefined, undefined);
+var scrollLockController = ScrollLockController$ScrollLockController.make(undefined, undefined, undefined, undefined, undefined);
 
 function enableLockButton(lockButtonEl) {
   var scrollableNodeList = document.querySelectorAll(".js-modal-with-scroll");
