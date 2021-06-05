@@ -18,34 +18,34 @@ module LocksSet = {
     ref([])
   }
 
-  let isEmpty = (entity: t) => {
-    isEmptyArray(entity.contents)
+  let isEmpty = (it: t) => {
+    isEmptyArray(it.contents)
   }
 
-  let isExistingLock = (entity: t, lock: lock) => {
-    entity.contents->Js.Array2.some(entityLock => {
+  let isExistingLock = (it: t, lock: lock) => {
+    it.contents->Js.Array2.some(entityLock => {
       entityLock === lock
     })
   }
 
-  let add = (entity: t, locks: locks) => {
+  let add = (it: t, locks: locks) => {
     let uniqLocks = uniq(locks)
 
     let added = uniqLocks->Js.Array2.filter(lock => {
-      !(entity->isExistingLock(lock))
+      !(it->isExistingLock(lock))
     })
 
-    entity := entity.contents->Js.Array2.concat(added)
+    it := it.contents->Js.Array2.concat(added)
 
     added
   }
 
-  let remove = (entity: t, locks: locks) => {
+  let remove = (it: t, locks: locks) => {
     let removingLocksRef = ref(uniq(locks))
     let removedRef = ref([])
 
-    entity :=
-      entity.contents->Js.Array2.filter(existingLock => {
+    it :=
+      it.contents->Js.Array2.filter(existingLock => {
         let removingLockIdx = removingLocksRef.contents->Js.Array2.indexOf(existingLock)
         let isRemovingLock = removingLockIdx >= 0
 
@@ -57,6 +57,7 @@ module LocksSet = {
         !isRemovingLock
       })
 
+    // FIXME: There is a bug. Replace to removedRef. But only after a test for this
     removingLocksRef.contents
   }
 }
@@ -68,21 +69,21 @@ module TrackedValue = {
     {valueRef: ref(defaultValue), onChange: onChage}
   }
 
-  let set = (entity: t<'curValue>, valueGetter) => {
-    let prevValue = entity.valueRef.contents
+  let set = (it: t<'curValue>, valueGetter) => {
+    let prevValue = it.valueRef.contents
     let newValue = valueGetter(. prevValue)
 
     switch newValue !== prevValue {
     | true => {
-        entity.valueRef := newValue
-        entity.onChange(newValue)
+        it.valueRef := newValue
+        it.onChange(newValue)
       }
     | false => ()
     }
   }
 
-  let get = (entity: t<'curValue>) => {
-    entity.valueRef.contents
+  let get = (it: t<'curValue>) => {
+    it.valueRef.contents
   }
 }
 

@@ -18,33 +18,33 @@ function make(param) {
         };
 }
 
-function isEmpty(entity) {
-  return entity.contents.length === 0;
+function isEmpty(it) {
+  return it.contents.length === 0;
 }
 
-function isExistingLock(entity, lock) {
-  return entity.contents.some(function (entityLock) {
+function isExistingLock(it, lock) {
+  return it.contents.some(function (entityLock) {
               return entityLock === lock;
             });
 }
 
-function add(entity, locks) {
+function add(it, locks) {
   var uniqLocks = uniq(locks);
   var added = uniqLocks.filter(function (lock) {
-        return !isExistingLock(entity, lock);
+        return !isExistingLock(it, lock);
       });
-  entity.contents = entity.contents.concat(added);
+  it.contents = it.contents.concat(added);
   return added;
 }
 
-function remove(entity, locks) {
+function remove(it, locks) {
   var removingLocksRef = {
     contents: uniq(locks)
   };
   var removedRef = {
     contents: []
   };
-  entity.contents = entity.contents.filter(function (existingLock) {
+  it.contents = it.contents.filter(function (existingLock) {
         var removingLockIdx = removingLocksRef.contents.indexOf(existingLock);
         var isRemovingLock = removingLockIdx >= 0;
         var removedLocks = removingLocksRef.contents.splice(removingLockIdx, 1);
@@ -71,18 +71,18 @@ function make$1(onChage, defaultValue) {
         };
 }
 
-function set(entity, valueGetter) {
-  var prevValue = entity.valueRef.contents;
+function set(it, valueGetter) {
+  var prevValue = it.valueRef.contents;
   var newValue = valueGetter(prevValue);
   if (newValue !== prevValue) {
-    entity.valueRef.contents = newValue;
-    return Curry._1(entity.onChange, newValue);
+    it.valueRef.contents = newValue;
+    return Curry._1(it.onChange, newValue);
   }
   
 }
 
-function get(entity) {
-  return entity.valueRef.contents;
+function get(it) {
+  return it.valueRef.contents;
 }
 
 var TrackedValue = {
