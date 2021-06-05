@@ -1,1 +1,1 @@
-# scroll-lock-controller
+# scrollock

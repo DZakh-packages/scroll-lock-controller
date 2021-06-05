@@ -1,15 +1,15 @@
 {
-  "name": "scroll-lock-controller",
+  "name": "scrollock",
   "version": "0.0.1",
   "files": [
     "dist"
   ],
-  "main": "./dist/scroll-lock-controller.umd.js",
-  "module": "./dist/scroll-lock-controller.es.js",
+  "main": "./dist/scrollock.umd.js",
+  "module": "./dist/scrollock.es.js",
   "exports": {
     ".": {
-      "import": "./dist/scroll-lock-controller.es.js",
-      "require": "./dist/scroll-lock-controller.umd.js"
+      "import": "./dist/scrollock.es.js",
+      "require": "./dist/scrollock.umd.js"
     }
   },
   "scripts": {

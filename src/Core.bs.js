@@ -2,11 +2,11 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as BodyScrollLock from "body-scroll-lock";
-import * as ScrollLockController_Helpers$ScrollLockController from "./ScrollLockController_Helpers.bs.js";
+import * as Scrollok__Helpers$Scrollock from "./Scrollok__Helpers.bs.js";
 
 function make(onBodyScrollLock, onBodyScrollUnlock, onLockTargetsAdd, onLockTargetsRemove, param) {
-  var locks = ScrollLockController_Helpers$ScrollLockController.LocksSet.make(undefined);
-  var isLocked = ScrollLockController_Helpers$ScrollLockController.TrackedValue.make((function (newIsLocked) {
+  var locks = Scrollok__Helpers$Scrollock.LocksSet.make(undefined);
+  var isLocked = Scrollok__Helpers$Scrollock.TrackedValue.make((function (newIsLocked) {
           if (newIsLocked) {
             if (onBodyScrollLock !== undefined) {
               return Curry._1(onBodyScrollLock, undefined);
@@ -28,11 +28,11 @@ function make(onBodyScrollLock, onBodyScrollUnlock, onLockTargetsAdd, onLockTarg
 }
 
 function isBodyScrollLocked(it) {
-  return !ScrollLockController_Helpers$ScrollLockController.LocksSet.isEmpty(it.locks);
+  return !Scrollok__Helpers$Scrollock.LocksSet.isEmpty(it.locks);
 }
 
 function lock(it, targetElements) {
-  var added = ScrollLockController_Helpers$ScrollLockController.LocksSet.add(it.locks, targetElements);
+  var added = Scrollok__Helpers$Scrollock.LocksSet.add(it.locks, targetElements);
   var hasAddedTargetElements = added.length > 0;
   added.forEach(function (targetElement) {
         BodyScrollLock.disableBodyScroll(targetElement, {
@@ -40,7 +40,7 @@ function lock(it, targetElements) {
             });
         
       });
-  ScrollLockController_Helpers$ScrollLockController.TrackedValue.set(it.isLocked, (function (param) {
+  Scrollok__Helpers$Scrollock.TrackedValue.set(it.isLocked, (function (param) {
           return isBodyScrollLocked(it);
         }));
   var match = it.onLockTargetsAdd;
@@ -51,13 +51,13 @@ function lock(it, targetElements) {
 }
 
 function unlock(it, targetElements) {
-  var removed = ScrollLockController_Helpers$ScrollLockController.LocksSet.remove(it.locks, targetElements);
+  var removed = Scrollok__Helpers$Scrollock.LocksSet.remove(it.locks, targetElements);
   var hasRemovedTargetElements = removed.length > 0;
   removed.forEach(function (targetElement) {
         BodyScrollLock.enableBodyScroll(targetElement);
         
       });
-  ScrollLockController_Helpers$ScrollLockController.TrackedValue.set(it.isLocked, (function (param) {
+  Scrollok__Helpers$Scrollock.TrackedValue.set(it.isLocked, (function (param) {
           return isBodyScrollLocked(it);
         }));
   var match = it.onLockTargetsRemove;
@@ -68,7 +68,7 @@ function unlock(it, targetElements) {
 }
 
 function clear(it) {
-  return unlock(it, ScrollLockController_Helpers$ScrollLockController.LocksSet.getCurrentLocks(it.locks));
+  return unlock(it, Scrollok__Helpers$Scrollock.LocksSet.getCurrentLocks(it.locks));
 }
 
 export {

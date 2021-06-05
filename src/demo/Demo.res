@@ -2,15 +2,15 @@
 
 open Webapi.Dom
 
-let scrollLockController = ScrollLockController.make()
+let scrollLockController = Core.make()
 
 let enableLockButton = lockButtonEl => {
   let scrollableNodeList = document->Document.querySelectorAll(".js-modal-with-scroll", _)
 
   let onLockButtonClick = _ => {
     scrollableNodeList->NodeList.forEach((scrollableNode, _idx) => {
-      switch ScrollLockController_Helpers.convertNodeToElement(scrollableNode) {
-      | Some(scrollableEl) => scrollLockController->ScrollLockController.lock([scrollableEl])
+      switch Scrollok__Helpers.convertNodeToElement(scrollableNode) {
+      | Some(scrollableEl) => scrollLockController->Core.lock([scrollableEl])
       | None => ()
       }
     }, _)
@@ -24,8 +24,8 @@ let enableUnlockButton = unlockButtonEl => {
 
   let onUnlockButtonClick = _ => {
     scrollableNodeList->NodeList.forEach((scrollableNode, _idx) => {
-      switch ScrollLockController_Helpers.convertNodeToElement(scrollableNode) {
-      | Some(scrollableEl) => scrollLockController->ScrollLockController.unlock([scrollableEl])
+      switch Scrollok__Helpers.convertNodeToElement(scrollableNode) {
+      | Some(scrollableEl) => scrollLockController->Core.unlock([scrollableEl])
       | None => ()
       }
     }, _)
