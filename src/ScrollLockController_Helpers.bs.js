@@ -22,6 +22,10 @@ function isEmpty(it) {
   return it.contents.length === 0;
 }
 
+function getCurrentLocks(it) {
+  return it.contents;
+}
+
 function isExistingLock(it, lock) {
   return it.contents.some(function (entityLock) {
               return entityLock === lock;
@@ -57,6 +61,7 @@ function remove(it, locks) {
 var LocksSet = {
   make: make,
   isEmpty: isEmpty,
+  getCurrentLocks: getCurrentLocks,
   isExistingLock: isExistingLock,
   add: add,
   remove: remove

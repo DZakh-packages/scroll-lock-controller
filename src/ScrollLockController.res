@@ -71,3 +71,7 @@ let unlock = (it: t, targetElements) => {
   | (_, _) => ()
   }
 }
+
+let clear = (it: t) => {
+  it->unlock(it.locks->ScrollLockController_Helpers.LocksSet.getCurrentLocks)
+}

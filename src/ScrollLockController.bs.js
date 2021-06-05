@@ -67,10 +67,15 @@ function unlock(it, targetElements) {
   
 }
 
+function clear(it) {
+  return unlock(it, ScrollLockController_Helpers$ScrollLockController.LocksSet.getCurrentLocks(it.locks));
+}
+
 export {
   make ,
   lock ,
   unlock ,
+  clear ,
   
 }
 /* body-scroll-lock Not a pure module */

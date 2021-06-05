@@ -22,6 +22,10 @@ module LocksSet = {
     isEmptyArray(it.contents)
   }
 
+  let getCurrentLocks = (it: t) => {
+    it.contents
+  }
+
   let isExistingLock = (it: t, lock: lock) => {
     it.contents->Js.Array2.some(entityLock => {
       entityLock === lock

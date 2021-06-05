@@ -16,3 +16,5 @@ let make: (
 let lock: (t, array<Dom.element>) => unit
 
 let unlock: (t, array<Dom.element>) => unit
+
+let clear: t => unit
