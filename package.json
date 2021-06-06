@@ -1,12 +1,33 @@
 {
   "name": "scrollock",
   "version": "0.0.1",
-  "files": [
-    "dist"
+  "description": "Controllable scroll lock library with neat plugin system",
+  "keywords": [
+    "body scroll",
+    "body scroll lock",
+    "react scroll lock",
+    "react scroll",
+    "scroll",
+    "lock",
+    "freeze",
+    "toggle",
+    "disable",
+    "overflow",
+    "modal",
+    "lightbox",
+    "rescript",
+    "plugin",
+    "custom"
   ],
-  "main": "./dist/scrollok.js",
-  "module": "./dist/scrollok.mjs",
-  "typings": "./dist/scrollok.d.ts",
+  "homepage": "https://github.com/DZakh-packages/scrollock#readme",
+  "bugs": {
+    "url": "https://github.com/DZakh-packages/scrollock/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DZakh-packages/scrollock.git"
+  },
+  "author": "DZakh <dzakh.dev@gmail.com> (https://github.com/DZakh)",
   "exports": {
     ".": {
       "import": "./dist/scrollok.mjs",
@@ -17,6 +38,8 @@
       "require": "./dist/plugins/*.js"
     }
   },
+  "main": "./dist/scrollok.js",
+  "module": "./dist/scrollok.mjs",
   "typesVersions": {
     "*": {
       ".": [
@@ -27,6 +50,7 @@
       ]
     }
   },
+  "typings": "./dist/scrollok.d.ts",
   "scripts": {
     "demo": "vite serve",
     "build": "rollup -c",
@@ -35,11 +59,6 @@
     "re:dev": "rescript build -w",
     "test": "jest"
   },
-  "keywords": [
-    "rescript"
-  ],
-  "author": "",
-  "license": "MIT",
   "dependencies": {
     "body-scroll-lock": "^3.1.5",
     "bs-webapi": "^0.19.1",
