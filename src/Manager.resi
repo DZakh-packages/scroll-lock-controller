@@ -1,13 +1,16 @@
-type t
 type targetElements = array<Dom.element>
-type hooks = {
+type pluginHooks = {
   onBodyScrollLock: option<unit => unit>,
   onBodyScrollUnlock: option<unit => unit>,
   onLockTargetsAdd: option<targetElements => unit>,
   onLockTargetsRemove: option<targetElements => unit>,
 }
+type pluginFactory = unit => pluginHooks
 
-let make: hooks => t
+type t
+type config = {plugins: array<pluginFactory>}
+
+let make: (~config: config=?, unit) => t
 
 let lock: (t, targetElements) => unit
 

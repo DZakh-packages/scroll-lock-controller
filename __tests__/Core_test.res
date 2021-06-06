@@ -14,7 +14,15 @@ describe("Test Core", () => {
       let mockOnBodyScrollLock = Jest.JestJs.fn(() => ())
 
       mockOnBodyScrollLockRef := Some(mockOnBodyScrollLock)
-      scrollokCoreRef := Some(Core.make(~onBodyScrollLock=mockOnBodyScrollLock->Jest.MockJs.fn, ()))
+      scrollokCoreRef :=
+        Some(
+          Core.make({
+            onBodyScrollLock: Some(mockOnBodyScrollLock->Jest.MockJs.fn),
+            onBodyScrollUnlock: None,
+            onLockTargetsAdd: None,
+            onLockTargetsRemove: None,
+          }),
+        )
       targetElement1Ref := Some(Webapi.Dom.Document.createElement("div", Webapi.Dom.document))
     })
 
@@ -123,7 +131,14 @@ describe("Test Core", () => {
 
       mockOnBodyScrollUnlockRef := Some(mockOnBodyScrollUnlock)
       scrollokCoreRef :=
-        Some(Core.make(~onBodyScrollUnlock=mockOnBodyScrollUnlock->Jest.MockJs.fn, ()))
+        Some(
+          Core.make({
+            onBodyScrollLock: None,
+            onBodyScrollUnlock: Some(mockOnBodyScrollUnlock->Jest.MockJs.fn),
+            onLockTargetsAdd: None,
+            onLockTargetsRemove: None,
+          }),
+        )
       targetElement1Ref := Some(Webapi.Dom.Document.createElement("div", Webapi.Dom.document))
     })
 
@@ -284,7 +299,15 @@ describe("Test Core", () => {
       let mockOnLockTargetsAdd = Jest.JestJs.fn(_ => ())
 
       mockOnLockTargetsAddRef := Some(mockOnLockTargetsAdd)
-      scrollokCoreRef := Some(Core.make(~onLockTargetsAdd=mockOnLockTargetsAdd->Jest.MockJs.fn, ()))
+      scrollokCoreRef :=
+        Some(
+          Core.make({
+            onBodyScrollLock: None,
+            onBodyScrollUnlock: None,
+            onLockTargetsAdd: Some(mockOnLockTargetsAdd->Jest.MockJs.fn),
+            onLockTargetsRemove: None,
+          }),
+        )
       targetElement1Ref := Some(Webapi.Dom.Document.createElement("div", Webapi.Dom.document))
     })
 
@@ -396,7 +419,14 @@ describe("Test Core", () => {
 
       mockOnLockTargetsRemoveRef := Some(mockOnLockTargetsRemove)
       scrollokCoreRef :=
-        Some(Core.make(~onLockTargetsRemove=mockOnLockTargetsRemove->Jest.MockJs.fn, ()))
+        Some(
+          Core.make({
+            onBodyScrollLock: None,
+            onBodyScrollUnlock: None,
+            onLockTargetsAdd: None,
+            onLockTargetsRemove: Some(mockOnLockTargetsRemove->Jest.MockJs.fn),
+          }),
+        )
       targetElement1Ref := Some(Webapi.Dom.Document.createElement("div", Webapi.Dom.document))
     })
 

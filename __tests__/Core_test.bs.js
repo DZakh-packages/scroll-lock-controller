@@ -38,7 +38,12 @@ Jest.describe("Test Core", (function (param) {
                             
                           });
                       mockOnBodyScrollLockRef.contents = Caml_option.some(mockOnBodyScrollLock);
-                      scrollokCoreRef.contents = Caml_option.some(Core$Scrollock.make(mockOnBodyScrollLock, undefined, undefined, undefined, undefined));
+                      scrollokCoreRef.contents = Caml_option.some(Core$Scrollock.make({
+                                onBodyScrollLock: mockOnBodyScrollLock,
+                                onBodyScrollUnlock: undefined,
+                                onLockTargetsAdd: undefined,
+                                onLockTargetsRemove: undefined
+                              }));
                       targetElement1Ref.contents = Caml_option.some(document.createElement("div"));
                       
                     });
@@ -171,7 +176,12 @@ Jest.describe("Test Core", (function (param) {
                             
                           });
                       mockOnBodyScrollUnlockRef.contents = Caml_option.some(mockOnBodyScrollUnlock);
-                      scrollokCoreRef.contents = Caml_option.some(Core$Scrollock.make(undefined, mockOnBodyScrollUnlock, undefined, undefined, undefined));
+                      scrollokCoreRef.contents = Caml_option.some(Core$Scrollock.make({
+                                onBodyScrollLock: undefined,
+                                onBodyScrollUnlock: mockOnBodyScrollUnlock,
+                                onLockTargetsAdd: undefined,
+                                onLockTargetsRemove: undefined
+                              }));
                       targetElement1Ref.contents = Caml_option.some(document.createElement("div"));
                       
                     });
@@ -340,7 +350,12 @@ Jest.describe("Test Core", (function (param) {
                             
                           });
                       mockOnLockTargetsAddRef.contents = Caml_option.some(mockOnLockTargetsAdd);
-                      scrollokCoreRef.contents = Caml_option.some(Core$Scrollock.make(undefined, undefined, mockOnLockTargetsAdd, undefined, undefined));
+                      scrollokCoreRef.contents = Caml_option.some(Core$Scrollock.make({
+                                onBodyScrollLock: undefined,
+                                onBodyScrollUnlock: undefined,
+                                onLockTargetsAdd: mockOnLockTargetsAdd,
+                                onLockTargetsRemove: undefined
+                              }));
                       targetElement1Ref.contents = Caml_option.some(document.createElement("div"));
                       
                     });
@@ -476,7 +491,12 @@ Jest.describe("Test Core", (function (param) {
                                   
                                 });
                             mockOnLockTargetsRemoveRef.contents = Caml_option.some(mockOnLockTargetsRemove);
-                            scrollokCoreRef.contents = Caml_option.some(Core$Scrollock.make(undefined, undefined, undefined, mockOnLockTargetsRemove, undefined));
+                            scrollokCoreRef.contents = Caml_option.some(Core$Scrollock.make({
+                                      onBodyScrollLock: undefined,
+                                      onBodyScrollUnlock: undefined,
+                                      onLockTargetsAdd: undefined,
+                                      onLockTargetsRemove: mockOnLockTargetsRemove
+                                    }));
                             targetElement1Ref.contents = Caml_option.some(document.createElement("div"));
                             
                           });
