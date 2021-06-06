@@ -2,7 +2,7 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as BodyScrollLock from "body-scroll-lock";
-import * as Scrollok__Helpers$Scrollock from "./Scrollok__Helpers.bs.js";
+import * as Scrollock__Helpers$Scrollock from "./Scrollock__Helpers.bs.js";
 
 function isExistingLock(it, lock) {
   return it.contents.some(function (entityLock) {
@@ -11,7 +11,7 @@ function isExistingLock(it, lock) {
 }
 
 function add(it, locks) {
-  var uniqLocks = Scrollok__Helpers$Scrollock.uniq(locks);
+  var uniqLocks = Scrollock__Helpers$Scrollock.uniq(locks);
   var added = uniqLocks.filter(function (lock) {
         return !isExistingLock(it, lock);
       });
@@ -21,7 +21,7 @@ function add(it, locks) {
 
 function remove(it, locks) {
   var removingLocksRef = {
-    contents: Scrollok__Helpers$Scrollock.uniq(locks)
+    contents: Scrollock__Helpers$Scrollock.uniq(locks)
   };
   var removedRef = {
     contents: []
@@ -90,7 +90,7 @@ function lock(it, targetElements) {
         
       });
   set(it.isLocked, (function (param) {
-          return !Scrollok__Helpers$Scrollock.isEmptyArray(it.locks.contents);
+          return !Scrollock__Helpers$Scrollock.isEmptyArray(it.locks.contents);
         }));
   var match = it.onLockTargetsAdd;
   if (match !== undefined && hasAddedTargetElements) {
@@ -107,7 +107,7 @@ function unlock(it, targetElements) {
         
       });
   set(it.isLocked, (function (param) {
-          return !Scrollok__Helpers$Scrollock.isEmptyArray(it.locks.contents);
+          return !Scrollock__Helpers$Scrollock.isEmptyArray(it.locks.contents);
         }));
   var match = it.onLockTargetsRemove;
   if (match !== undefined && hasRemovedTargetElements) {

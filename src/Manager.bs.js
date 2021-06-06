@@ -2,7 +2,7 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Core$Scrollock from "./Core.bs.js";
-import * as Scrollok__Helpers$Scrollock from "./Scrollok__Helpers.bs.js";
+import * as Scrollock__Helpers$Scrollock from "./Scrollock__Helpers.bs.js";
 
 function preparePluginsHooks(pluginFactories) {
   var groupedPluginsHooks_onBodyScrollLock = [];
@@ -42,25 +42,25 @@ function preparePluginsHooks(pluginFactories) {
 function make(pluginsOpt, param) {
   var plugins = pluginsOpt !== undefined ? pluginsOpt : [];
   var groupedPluginsHooks = preparePluginsHooks(plugins);
-  var onBodyScrollLock = Scrollok__Helpers$Scrollock.isEmptyArray(groupedPluginsHooks.onBodyScrollLock) ? undefined : (function (param) {
+  var onBodyScrollLock = Scrollock__Helpers$Scrollock.isEmptyArray(groupedPluginsHooks.onBodyScrollLock) ? undefined : (function (param) {
         groupedPluginsHooks.onBodyScrollLock.forEach(function (cb) {
               return Curry._1(cb, undefined);
             });
         
       });
-  var onBodyScrollUnlock = Scrollok__Helpers$Scrollock.isEmptyArray(groupedPluginsHooks.onBodyScrollUnlock) ? undefined : (function (param) {
+  var onBodyScrollUnlock = Scrollock__Helpers$Scrollock.isEmptyArray(groupedPluginsHooks.onBodyScrollUnlock) ? undefined : (function (param) {
         groupedPluginsHooks.onBodyScrollUnlock.forEach(function (cb) {
               return Curry._1(cb, undefined);
             });
         
       });
-  var onLockTargetsAdd = Scrollok__Helpers$Scrollock.isEmptyArray(groupedPluginsHooks.onLockTargetsAdd) ? undefined : (function (targetElements) {
+  var onLockTargetsAdd = Scrollock__Helpers$Scrollock.isEmptyArray(groupedPluginsHooks.onLockTargetsAdd) ? undefined : (function (targetElements) {
         groupedPluginsHooks.onLockTargetsAdd.forEach(function (cb) {
               return Curry._1(cb, targetElements);
             });
         
       });
-  var onLockTargetsRemove = Scrollok__Helpers$Scrollock.isEmptyArray(groupedPluginsHooks.onLockTargetsRemove) ? undefined : (function (targetElements) {
+  var onLockTargetsRemove = Scrollock__Helpers$Scrollock.isEmptyArray(groupedPluginsHooks.onLockTargetsRemove) ? undefined : (function (targetElements) {
         groupedPluginsHooks.onLockTargetsRemove.forEach(function (cb) {
               return Curry._1(cb, targetElements);
             });

@@ -3,14 +3,14 @@ module LocksSet = {
   type locks = array<lock>
   type t = ref<locks>
 
-  let uniq: Scrollok__Helpers.uniq<lock> = Scrollok__Helpers.uniq
+  let uniq: Scrollock__Helpers.uniq<lock> = Scrollock__Helpers.uniq
 
   let make = (): t => {
     ref([])
   }
 
   let isEmpty = (it: t) => {
-    Scrollok__Helpers.isEmptyArray(it.contents)
+    Scrollock__Helpers.isEmptyArray(it.contents)
   }
 
   let getCurrentLocks = (it: t) => {

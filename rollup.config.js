@@ -35,7 +35,7 @@ const makeBundle = ({ input, output }) => {
 export default [
   ...makeBundle({
     input: './src/Manager.ts',
-    output: './dist/scrollok',
+    output: './dist/scrollock',
   }),
   ...makeBundle({
     input: './src/ReservedGapPlugin.gen.tsx',

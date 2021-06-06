@@ -1,19 +1,19 @@
 import * as Manager from './Manager.gen';
 export type { pluginFactory, targetElements, pluginHooks } from './Manager.gen'
 
-export const makeScrollokManager = (_1: { readonly plugins?: Manager.pluginFactory[] }) => {
-  const scrollok = Manager.make(_1);
+export const makeScrollockManager = (_1: { readonly plugins?: Manager.pluginFactory[] }) => {
+  const scrollock = Manager.make(_1);
 
   const lock = (targetElements: Manager.targetElements) => {
-    Manager.lock(scrollok, targetElements);
+    Manager.lock(scrollock, targetElements);
   };
 
   const unlock = (targetElements: Manager.targetElements) => {
-    Manager.unlock(scrollok, targetElements);
+    Manager.unlock(scrollock, targetElements);
   };
 
   const clear = () => {
-    Manager.clear(scrollok);
+    Manager.clear(scrollock);
   };
 
   return {

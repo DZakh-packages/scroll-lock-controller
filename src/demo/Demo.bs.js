@@ -3,12 +3,12 @@
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Manager$Scrollock from "../Manager.bs.js";
 import * as ReservedGapPlugin$Scrollock from "../ReservedGapPlugin.bs.js";
-import * as Scrollok__Helpers$Scrollock from "../Scrollok__Helpers.bs.js";
+import * as Scrollock__Helpers$Scrollock from "../Scrollock__Helpers.bs.js";
 
 import './style.css';
 ;
 
-var scrollok = Manager$Scrollock.make([(function (param) {
+var scrollock = Manager$Scrollock.make([(function (param) {
           return ReservedGapPlugin$Scrollock.make(undefined, param);
         })], undefined);
 
@@ -16,9 +16,9 @@ function enableLockButton(lockButtonEl) {
   var scrollableNodeList = document.querySelectorAll(".js-modal-with-scroll");
   var onLockButtonClick = function (param) {
     scrollableNodeList.forEach(function (scrollableNode, _idx) {
-          var scrollableEl = Scrollok__Helpers$Scrollock.convertNodeToElement(scrollableNode);
+          var scrollableEl = Scrollock__Helpers$Scrollock.convertNodeToElement(scrollableNode);
           if (scrollableEl !== undefined) {
-            return Manager$Scrollock.lock(scrollok, [Caml_option.valFromOption(scrollableEl)]);
+            return Manager$Scrollock.lock(scrollock, [Caml_option.valFromOption(scrollableEl)]);
           }
           
         });
@@ -32,9 +32,9 @@ function enableUnlockButton(unlockButtonEl) {
   var scrollableNodeList = document.querySelectorAll(".js-modal-with-scroll");
   var onUnlockButtonClick = function (param) {
     scrollableNodeList.forEach(function (scrollableNode, _idx) {
-          var scrollableEl = Scrollok__Helpers$Scrollock.convertNodeToElement(scrollableNode);
+          var scrollableEl = Scrollock__Helpers$Scrollock.convertNodeToElement(scrollableNode);
           if (scrollableEl !== undefined) {
-            return Manager$Scrollock.unlock(scrollok, [Caml_option.valFromOption(scrollableEl)]);
+            return Manager$Scrollock.unlock(scrollock, [Caml_option.valFromOption(scrollableEl)]);
           }
           
         });
@@ -61,7 +61,7 @@ if (!(unlockButtonEl == null)) {
 }
 
 export {
-  scrollok ,
+  scrollock ,
   enableLockButton ,
   enableUnlockButton ,
   

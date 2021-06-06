@@ -58,7 +58,7 @@ let preparePluginsHooks = (pluginFactories: array<pluginFactory>): groupedPlugin
 let make = (~plugins: array<pluginFactory>=[], ()) => {
   let groupedPluginsHooks = preparePluginsHooks(plugins)
 
-  let onBodyScrollLock = switch groupedPluginsHooks.onBodyScrollLock->Scrollok__Helpers.isEmptyArray {
+  let onBodyScrollLock = switch groupedPluginsHooks.onBodyScrollLock->Scrollock__Helpers.isEmptyArray {
   | false =>
     Some(
       () => {
@@ -70,7 +70,7 @@ let make = (~plugins: array<pluginFactory>=[], ()) => {
   | true => None
   }
 
-  let onBodyScrollUnlock = switch groupedPluginsHooks.onBodyScrollUnlock->Scrollok__Helpers.isEmptyArray {
+  let onBodyScrollUnlock = switch groupedPluginsHooks.onBodyScrollUnlock->Scrollock__Helpers.isEmptyArray {
   | false =>
     Some(
       () => {
@@ -82,7 +82,7 @@ let make = (~plugins: array<pluginFactory>=[], ()) => {
   | true => None
   }
 
-  let onLockTargetsAdd = switch groupedPluginsHooks.onLockTargetsAdd->Scrollok__Helpers.isEmptyArray {
+  let onLockTargetsAdd = switch groupedPluginsHooks.onLockTargetsAdd->Scrollock__Helpers.isEmptyArray {
   | false =>
     Some(
       targetElements => {
@@ -94,7 +94,7 @@ let make = (~plugins: array<pluginFactory>=[], ()) => {
   | true => None
   }
 
-  let onLockTargetsRemove = switch groupedPluginsHooks.onLockTargetsRemove->Scrollok__Helpers.isEmptyArray {
+  let onLockTargetsRemove = switch groupedPluginsHooks.onLockTargetsRemove->Scrollock__Helpers.isEmptyArray {
   | false =>
     Some(
       targetElements => {

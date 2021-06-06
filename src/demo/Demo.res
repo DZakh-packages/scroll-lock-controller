@@ -2,15 +2,15 @@
 
 open Webapi.Dom
 
-let scrollok = Manager.make(~plugins=[ReservedGapPlugin.make()], ())
+let scrollock = Manager.make(~plugins=[ReservedGapPlugin.make()], ())
 
 let enableLockButton = lockButtonEl => {
   let scrollableNodeList = document->Document.querySelectorAll(".js-modal-with-scroll", _)
 
   let onLockButtonClick = _ => {
     scrollableNodeList->NodeList.forEach((scrollableNode, _idx) => {
-      switch Scrollok__Helpers.convertNodeToElement(scrollableNode) {
-      | Some(scrollableEl) => scrollok->Manager.lock([scrollableEl])
+      switch Scrollock__Helpers.convertNodeToElement(scrollableNode) {
+      | Some(scrollableEl) => scrollock->Manager.lock([scrollableEl])
       | None => ()
       }
     }, _)
@@ -24,8 +24,8 @@ let enableUnlockButton = unlockButtonEl => {
 
   let onUnlockButtonClick = _ => {
     scrollableNodeList->NodeList.forEach((scrollableNode, _idx) => {
-      switch Scrollok__Helpers.convertNodeToElement(scrollableNode) {
-      | Some(scrollableEl) => scrollok->Manager.unlock([scrollableEl])
+      switch Scrollock__Helpers.convertNodeToElement(scrollableNode) {
+      | Some(scrollableEl) => scrollock->Manager.unlock([scrollableEl])
       | None => ()
       }
     }, _)

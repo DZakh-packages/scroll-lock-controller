@@ -30,27 +30,27 @@
   "author": "DZakh <dzakh.dev@gmail.com> (https://github.com/DZakh)",
   "exports": {
     ".": {
-      "import": "./dist/scrollok.mjs",
-      "require": "./dist/scrollok.js"
+      "import": "./dist/scrollock.mjs",
+      "require": "./dist/scrollock.js"
     },
     "./plugins/*": {
       "import": "./dist/plugins/*.mjs",
       "require": "./dist/plugins/*.js"
     }
   },
-  "main": "./dist/scrollok.js",
-  "module": "./dist/scrollok.mjs",
+  "main": "./dist/scrollock.js",
+  "module": "./dist/scrollock.mjs",
   "typesVersions": {
     "*": {
       ".": [
-        "./dist/scrollok.d.ts"
+        "./dist/scrollock.d.ts"
       ],
       "./plugins/*": [
         "./dist/plugins/*.d.ts"
       ]
     }
   },
-  "typings": "./dist/scrollok.d.ts",
+  "typings": "./dist/scrollock.d.ts",
   "scripts": {
     "demo": "vite serve",
     "build": "rollup -c",
