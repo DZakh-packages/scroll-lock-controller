@@ -1,11 +1,15 @@
 import dts from 'rollup-plugin-dts'
 import esbuild from 'rollup-plugin-esbuild'
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import { terser } from 'rollup-plugin-terser';
 
 const makeBundle = ({ input, output }) => {
   return [
     {
       input,
-      plugins: [esbuild()],
+      plugins: [nodeResolve(), esbuild({
+        minify: false,
+      }), terser()],
       output: [
         {
           file: `${output}.js`,
@@ -18,7 +22,6 @@ const makeBundle = ({ input, output }) => {
           sourcemap: true,
         },
       ],
-      external: id => !/^[./]/.test(id),
     },
     {
       input,
@@ -27,7 +30,6 @@ const makeBundle = ({ input, output }) => {
         file: `${output}.d.ts`,
         format: 'es',
       },
-      external: id => !/^[./]/.test(id),
     }
   ]
 }
