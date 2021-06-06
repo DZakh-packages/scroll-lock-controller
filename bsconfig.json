@@ -25,5 +25,15 @@
   ],
   "bs-dev-dependencies": [
     "@glennsl/bs-jest"
-  ]
+  ],
+  "gentypeconfig": {
+    "language": "typescript",
+    "shims": {
+      "Dom": "Dom"
+    },
+    "importPath": "relative",
+    "debug": {
+      "all": false
+    }
+  }
 }

@@ -1,3 +1,4 @@
+@genType
 let make = (): Manager.pluginFactory => {
   () => {
     {
