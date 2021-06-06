@@ -1,0 +1,4 @@
+*
+!bsconfig.json
+!src/*
+!dist/*
