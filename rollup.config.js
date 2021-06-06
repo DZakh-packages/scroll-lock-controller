@@ -1,35 +1,47 @@
 import dts from 'rollup-plugin-dts'
 import esbuild from 'rollup-plugin-esbuild'
 
-const name = require('./package.json').main.replace(/\.js$/, '')
 
-const bundle = config => ({
-  ...config,
-  input: 'src/Manager.gen.tsx',
-  external: id => !/^[./]/.test(id),
-})
+
+
+const makeBundle = ({ input, output }) => {
+  return [
+    {
+      input,
+      plugins: [esbuild()],
+      output: [
+        {
+          file: `${output}.js`,
+          format: 'cjs',
+          sourcemap: true,
+        },
+        {
+          file: `${output}.mjs`,
+          format: 'es',
+          sourcemap: true,
+        },
+      ],
+      external: id => !/^[./]/.test(id),
+    },
+    {
+      input,
+      plugins: [dts()],
+      output: {
+        file: `${output}.d.ts`,
+        format: 'es',
+      },
+      external: id => !/^[./]/.test(id),
+    }
+  ]
+}
 
 export default [
-  bundle({
-    plugins: [esbuild()],
-    output: [
-      {
-        file: `${name}.js`,
-        format: 'cjs',
-        sourcemap: true,
-      },
-      {
-        file: `${name}.mjs`,
-        format: 'es',
-        sourcemap: true,
-      },
-    ],
+  ...makeBundle({
+    input: './src/Manager.gen.tsx',
+    output: './dist/scrollok',
   }),
-  bundle({
-    plugins: [dts()],
-    output: {
-      file: `${name}.d.ts`,
-      format: 'es',
-    },
-  }),
+  ...makeBundle({
+    input: './src/ReservedGapPlugin.gen.tsx',
+    output: './dist/plugins/reserved-gap-plugin',
+  })
 ]

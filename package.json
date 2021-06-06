@@ -4,9 +4,29 @@
   "files": [
     "dist"
   ],
-  "main": "dist/scrollok.js",
-  "module": "dist/scrollok.mjs",
-  "typings": "dist/scrollok.d.ts",
+  "main": "./dist/scrollok.js",
+  "module": "./dist/scrollok.mjs",
+  "typings": "./dist/scrollok.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/scrollok.mjs",
+      "require": "./dist/scrollok.js"
+    },
+    "./plugins/*": {
+      "import": "./dist/plugins/*.mjs",
+      "require": "./dist/plugins/*.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./dist/scrollok.d.ts"
+      ],
+      "./plugins/*": [
+        "./dist/plugins/*.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "demo": "vite serve",
     "build": "rollup -c",
