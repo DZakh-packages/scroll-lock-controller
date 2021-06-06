@@ -16,7 +16,7 @@
     "modal",
     "lightbox",
     "rescript",
-    "plugin",
+    "plugins",
     "custom"
   ],
   "homepage": "https://github.com/DZakh-packages/scrollock#readme",
@@ -61,22 +61,22 @@
   },
   "dependencies": {
     "body-scroll-lock": "^3.1.5",
-    "bs-webapi": "^0.19.1",
-    "esbuild": "^0.12.6",
-    "gentype": "^4.1.0",
-    "rescript": "^9.1.2",
-    "rescript-body-scroll-lock": "^3.1.0",
-    "rollup": "^2.51.0",
-    "rollup-plugin-dts": "^3.0.2",
-    "rollup-plugin-esbuild": "^4.5.0",
-    "typescript": "^4.3.2",
-    "vite": "^2.3.6"
+    "rescript": "^9.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.14.3",
     "@babel/preset-env": "^7.14.2",
     "@glennsl/bs-jest": "^0.7.0",
     "babel-jest": "^26.6.3",
-    "jest": "^26.6.3"
+    "bs-webapi": "^0.19.1",
+    "esbuild": "^0.12.6",
+    "gentype": "^4.1.0",
+    "jest": "^26.6.3",
+    "rescript-body-scroll-lock": "^3.1.0",
+    "rollup": "^2.51.0",
+    "rollup-plugin-dts": "^3.0.2",
+    "rollup-plugin-esbuild": "^4.5.0",
+    "typescript": "^4.3.2",
+    "vite": "^2.3.6"
   }
 }
