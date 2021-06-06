@@ -1,8 +1,14 @@
 {
-  "name": "rescript-project-template",
+  "name": "scrollock",
+  "namespace": true,
   "sources": [
     {
       "dir": "src",
+      "subdirs": true
+    },
+    {
+      "dir": "__tests__",
+      "type": "dev",
       "subdirs": true
     }
   ],
@@ -13,5 +19,21 @@
     }
   ],
   "suffix": ".bs.js",
-  "bs-dependencies": ["bs-webapi"]
+  "bs-dependencies": [
+    "bs-webapi",
+    "rescript-body-scroll-lock"
+  ],
+  "bs-dev-dependencies": [
+    "@glennsl/bs-jest"
+  ],
+  "gentypeconfig": {
+    "language": "typescript",
+    "shims": {
+      "Dom": "Dom"
+    },
+    "importPath": "relative",
+    "debug": {
+      "all": false
+    }
+  }
 }

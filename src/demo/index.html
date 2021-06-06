@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Demo</title>
-  </head>
-  <body>
-    <div class="screen background_red"></div>
-    <div class="screen background_blue"></div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demo</title>
+</head>
+
+<body>
+  <div class="screen background_red"></div>
+  <div class="screen background_blue"></div>
+  <div class="screen background_green"></div>
+
+  <div class="modal js-modal-with-scroll">
     <div class="screen background_green"></div>
+    <div class="screen background_blue"></div>
+    <div class="screen background_red"></div>
+  </div>
 
-    <div class="controls__container">
-      <h1>Controls</h1>
-      <div>
-        <button class="js-lock-button">lock</button>
-        <button class="js-unlock-button">unlock</button>
-      </div>
+  <div class="controls__container">
+    <h1>Controls</h1>
+    <div>
+      <button class="js-lock-button">lock</button>
+      <button class="js-unlock-button">unlock</button>
     </div>
+  </div>
 
-    <script type="module" src="./Demo.bs.js"></script>
-  </body>
+  <script type="module" src="./Demo.bs.js"></script>
+</body>
+
 </html>

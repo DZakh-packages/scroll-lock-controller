@@ -1,32 +1,82 @@
 {
-  "name": "scroll-lock-controller",
+  "name": "scrollock",
   "version": "0.0.1",
-  "files": [
-    "dist"
+  "description": "Controllable scroll lock library with neat plugin system",
+  "keywords": [
+    "body scroll",
+    "body scroll lock",
+    "react scroll lock",
+    "react scroll",
+    "scroll",
+    "lock",
+    "freeze",
+    "toggle",
+    "disable",
+    "overflow",
+    "modal",
+    "lightbox",
+    "rescript",
+    "plugin",
+    "custom"
   ],
-  "main": "./dist/scroll-lock-controller.umd.js",
-  "module": "./dist/scroll-lock-controller.es.js",
+  "homepage": "https://github.com/DZakh-packages/scrollock#readme",
+  "bugs": {
+    "url": "https://github.com/DZakh-packages/scrollock/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DZakh-packages/scrollock.git"
+  },
+  "author": "DZakh <dzakh.dev@gmail.com> (https://github.com/DZakh)",
   "exports": {
     ".": {
-      "import": "./dist/scroll-lock-controller.es.js",
-      "require": "./dist/scroll-lock-controller.umd.js"
+      "import": "./dist/scrollok.mjs",
+      "require": "./dist/scrollok.js"
+    },
+    "./plugins/*": {
+      "import": "./dist/plugins/*.mjs",
+      "require": "./dist/plugins/*.js"
     }
   },
+  "main": "./dist/scrollok.js",
+  "module": "./dist/scrollok.mjs",
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./dist/scrollok.d.ts"
+      ],
+      "./plugins/*": [
+        "./dist/plugins/*.d.ts"
+      ]
+    }
+  },
+  "typings": "./dist/scrollok.d.ts",
   "scripts": {
     "demo": "vite serve",
-    "build": "vite build",
+    "build": "rollup -c",
     "re:build": "rescript",
     "re:clean": "rescript clean -with-deps",
-    "re:dev": "rescript build -w"
+    "re:dev": "rescript build -w",
+    "test": "jest"
   },
-  "keywords": [
-    "rescript"
-  ],
-  "author": "",
-  "license": "MIT",
   "dependencies": {
+    "body-scroll-lock": "^3.1.5",
     "bs-webapi": "^0.19.1",
+    "esbuild": "^0.12.6",
+    "gentype": "^4.1.0",
     "rescript": "^9.1.2",
-    "vite": "^2.3.3"
+    "rescript-body-scroll-lock": "^3.1.0",
+    "rollup": "^2.51.0",
+    "rollup-plugin-dts": "^3.0.2",
+    "rollup-plugin-esbuild": "^4.5.0",
+    "typescript": "^4.3.2",
+    "vite": "^2.3.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.2",
+    "@glennsl/bs-jest": "^0.7.0",
+    "babel-jest": "^26.6.3",
+    "jest": "^26.6.3"
   }
 }
