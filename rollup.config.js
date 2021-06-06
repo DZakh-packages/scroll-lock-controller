@@ -1,9 +1,6 @@
 import dts from 'rollup-plugin-dts'
 import esbuild from 'rollup-plugin-esbuild'
 
-
-
-
 const makeBundle = ({ input, output }) => {
   return [
     {
@@ -37,7 +34,7 @@ const makeBundle = ({ input, output }) => {
 
 export default [
   ...makeBundle({
-    input: './src/Manager.gen.tsx',
+    input: './src/Manager.ts',
     output: './dist/scrollok',
   }),
   ...makeBundle({
