@@ -8,10 +8,9 @@ type pluginHooks = {
 type pluginFactory = unit => pluginHooks
 
 type t
-type config = {plugins: array<pluginFactory>}
 
 @genType
-let make: (~config: config=?, unit) => t
+let make: (~plugins: array<pluginFactory>=?, unit) => t
 
 @genType
 let lock: (t, targetElements) => unit

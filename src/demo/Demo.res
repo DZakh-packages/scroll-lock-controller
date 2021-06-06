@@ -2,7 +2,7 @@
 
 open Webapi.Dom
 
-let scrollok = Manager.make(~config={plugins: [ReservedGapPlugin.make()]}, ())
+let scrollok = Manager.make(~plugins=[ReservedGapPlugin.make()], ())
 
 let enableLockButton = lockButtonEl => {
   let scrollableNodeList = document->Document.querySelectorAll(".js-modal-with-scroll", _)

@@ -30,11 +30,8 @@ export type pluginFactory = () => pluginHooks;
 // tslint:disable-next-line:class-name
 export abstract class t { protected opaque!: any }; /* simulate opaque types */
 
-// tslint:disable-next-line:interface-over-type-literal
-export type config = { readonly plugins: pluginFactory[] };
-
-export const make: (_1:{ readonly config?: config }, _2:void) => t = function (Arg1: any, Arg2: any) {
-  const result = Curry._2(ManagerBS.make, Arg1.config, Arg2);
+export const make: (_1:{ readonly plugins?: pluginFactory[] }, _2:void) => t = function (Arg1: any, Arg2: any) {
+  const result = Curry._2(ManagerBS.make, Arg1.plugins, Arg2);
   return result
 };
 

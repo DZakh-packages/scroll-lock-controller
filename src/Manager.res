@@ -14,7 +14,6 @@ type groupedPluginsHooks = {
 type pluginFactory = unit => pluginHooks
 
 type t = {core: Core.t}
-type config = {plugins: array<pluginFactory>}
 
 let preparePluginsHooks = (pluginFactories: array<pluginFactory>): groupedPluginsHooks => {
   let groupedPluginsHooks = {
@@ -56,13 +55,8 @@ let preparePluginsHooks = (pluginFactories: array<pluginFactory>): groupedPlugin
   groupedPluginsHooks
 }
 
-let make = (~config: option<config>=?, ()) => {
-  let pluginFactories = switch config {
-  | Some(someConfig) => someConfig.plugins
-  | None => []
-  }
-
-  let groupedPluginsHooks = preparePluginsHooks(pluginFactories)
+let make = (~plugins: array<pluginFactory>=[], ()) => {
+  let groupedPluginsHooks = preparePluginsHooks(plugins)
 
   let onBodyScrollLock = switch groupedPluginsHooks.onBodyScrollLock->Scrollok__Helpers.isEmptyArray {
   | false =>

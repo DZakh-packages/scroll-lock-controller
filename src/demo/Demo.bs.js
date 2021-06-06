@@ -8,11 +8,9 @@ import * as Scrollok__Helpers$Scrollock from "../Scrollok__Helpers.bs.js";
 import './style.css';
 ;
 
-var scrollok = Manager$Scrollock.make({
-      plugins: [(function (param) {
-            return ReservedGapPlugin$Scrollock.make(undefined, param);
-          })]
-    }, undefined);
+var scrollok = Manager$Scrollock.make([(function (param) {
+          return ReservedGapPlugin$Scrollock.make(undefined, param);
+        })], undefined);
 
 function enableLockButton(lockButtonEl) {
   var scrollableNodeList = document.querySelectorAll(".js-modal-with-scroll");

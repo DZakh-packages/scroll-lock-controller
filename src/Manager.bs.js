@@ -39,9 +39,9 @@ function preparePluginsHooks(pluginFactories) {
   return groupedPluginsHooks;
 }
 
-function make(config, param) {
-  var pluginFactories = config !== undefined ? config.plugins : [];
-  var groupedPluginsHooks = preparePluginsHooks(pluginFactories);
+function make(pluginsOpt, param) {
+  var plugins = pluginsOpt !== undefined ? pluginsOpt : [];
+  var groupedPluginsHooks = preparePluginsHooks(plugins);
   var onBodyScrollLock = Scrollok__Helpers$Scrollock.isEmptyArray(groupedPluginsHooks.onBodyScrollLock) ? undefined : (function (param) {
         groupedPluginsHooks.onBodyScrollLock.forEach(function (cb) {
               return Curry._1(cb, undefined);
