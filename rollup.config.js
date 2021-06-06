@@ -1,7 +1,7 @@
 import dts from 'rollup-plugin-dts'
 import esbuild from 'rollup-plugin-esbuild'
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-// import { terser } from 'rollup-plugin-terser';
+import { terser } from 'rollup-plugin-terser';
 
 const makeBundle = ({ input, output }) => {
   return [
@@ -9,7 +9,7 @@ const makeBundle = ({ input, output }) => {
       input,
       plugins: [nodeResolve(), esbuild({
         minify: false,
-      })],
+      }), terser()],
       output: [
         {
           file: `${output}.js`,
