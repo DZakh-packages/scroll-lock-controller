@@ -29,16 +29,6 @@
   },
   "license": "MIT",
   "author": "DZakh <dzakh.dev@gmail.com> (https://github.com/DZakh)",
-  "exports": {
-    ".": {
-      "import": "./dist/scrollock.mjs",
-      "require": "./dist/scrollock.js"
-    },
-    "./plugins/reserved-gap-plugin": {
-      "import": "./dist/plugins/reserved-gap-plugin.mjs",
-      "require": "./dist/plugins/reserved-gap-plugin.js"
-    }
-  },
   "main": "./dist/scrollock.js",
   "module": "./dist/scrollock.mjs",
   "typesVersions": {
@@ -47,7 +37,7 @@
         "./dist/scrollock.d.ts"
       ],
       "./plugins/reserved-gap-plugin": [
-        "./dist/plugins/reserved-gap-plugin.d.ts"
+        "./plugins/reserved-gap-plugin.d.ts"
       ]
     }
   },

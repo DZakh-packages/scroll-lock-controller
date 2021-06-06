@@ -1,4 +1,7 @@
 *
 !bsconfig.json
-!src/**
+!src/**/*.res
+!src/**/*.resi
+src/Demo/**
 !dist/**
+!plugins/**

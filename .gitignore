@@ -7,6 +7,9 @@
 /lib/
 
 # vite
-/dist/
 /dist-ssr/
 *.local
+
+# build
+/dist/
+/plugins/
