@@ -34,9 +34,9 @@
       "import": "./dist/scrollock.mjs",
       "require": "./dist/scrollock.js"
     },
-    "./plugins/*": {
-      "import": "./dist/plugins/*.mjs",
-      "require": "./dist/plugins/*.js"
+    "./plugins/reserved-gap-plugin": {
+      "import": "./dist/plugins/reserved-gap-plugin.mjs",
+      "require": "./dist/plugins/reserved-gap-plugin.js"
     }
   },
   "main": "./dist/scrollock.js",
@@ -46,8 +46,8 @@
       ".": [
         "./dist/scrollock.d.ts"
       ],
-      "./plugins/*": [
-        "./dist/plugins/*.d.ts"
+      "./plugins/reserved-gap-plugin": [
+        "./dist/plugins/reserved-gap-plugin.d.ts"
       ]
     }
   },
