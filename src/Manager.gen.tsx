@@ -10,7 +10,7 @@ const Curry: any = Curry__Es6Import;
 import * as ManagerBS__Es6Import from './Manager.bs';
 const ManagerBS: any = ManagerBS__Es6Import;
 
-import type {element as Dom_element} from '../src/shims/DomShim.shim';
+import type {element as Dom_element} from '../src/shims/Dom.shim';
 
 // tslint:disable-next-line:interface-over-type-literal
 export type targetElements = Dom_element[];
