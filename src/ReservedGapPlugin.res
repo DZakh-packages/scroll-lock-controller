@@ -1,6 +1,6 @@
 @genType
-let make = (): Manager.pluginFactory => {
-  () => {
+let make = () => {
+  let pluginFactory: Manager.pluginFactory = () => {
     {
       onBodyScrollLock: Some(
         () => {
@@ -16,4 +16,5 @@ let make = (): Manager.pluginFactory => {
       onLockTargetsRemove: None,
     }
   }
+  pluginFactory
 }
