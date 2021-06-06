@@ -27,6 +27,7 @@
     "type": "git",
     "url": "git+https://github.com/DZakh-packages/scrollock.git"
   },
+  "license": "MIT",
   "author": "DZakh <dzakh.dev@gmail.com> (https://github.com/DZakh)",
   "exports": {
     ".": {
