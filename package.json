@@ -1,6 +1,6 @@
 {
   "name": "scrollock",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Controllable scroll lock library with neat plugin system",
   "keywords": [
     "body scroll",
